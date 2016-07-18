@@ -12,14 +12,11 @@ RUN apt-key update -y \
         bzip2 \
         curl \
         git \
-        php5-cgi \
-        php5-curl \
     && curl -o- \
         https://raw.githubusercontent.com/creationix/nvm/v0.31.2/install.sh \
         | /bin/bash \
     && /bin/bash --login -c " \
-        nvm install 4.2.4 \
-        && npm install -g grunt-cli"
+        nvm install 4.2.4
 
 # copy application (ignores set in .dockerignore)
 COPY . /hazdev-project
@@ -28,10 +25,8 @@ COPY . /hazdev-project
 RUN /bin/bash --login -c " \
     cd /hazdev-project \
     && npm install \
-    && php ./src/lib/pre-install.php --non-interactive \
-    && grunt builddist \
+    && ./src/lib/pre-install --non-interactive \
     && rm -r \
-        /hazdev-project/node_modules/grunt-mocha-phantomjs \
         /root/.npm \
         /tmp/npm* \
     "
@@ -39,4 +34,4 @@ RUN /bin/bash --login -c " \
 
 WORKDIR /hazdev-project
 EXPOSE 8881
-CMD /bin/bash --login -c "grunt rundist"
+CMD /bin/bash --login -c "node start"

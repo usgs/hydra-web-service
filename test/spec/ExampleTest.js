@@ -1,10 +1,10 @@
-/* global chai, describe, it */
+/* global describe, it */
 'use strict';
 
-var Xhr = require('util/Xhr');
 
-
-var expect = chai.expect;
+var chai = require('chai'),
+    expect = chai.expect,
+    sinon = require('sinon');
 
 
 describe('ExampleTest', function () {
@@ -16,19 +16,6 @@ describe('ExampleTest', function () {
 
     it('includes sinon', function () {
       expect(typeof sinon).to.equal('object');
-    });
-
-    it('has access to "etc" data', function (done) {
-      Xhr.ajax({
-        url: '/data.json',
-        success: function (data) {
-          expect(data.test).to.equal('Hello World');
-          done();
-        },
-        error: function () {
-          done(false);
-        }
-      });
     });
 
   });
