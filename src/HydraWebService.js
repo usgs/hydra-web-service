@@ -12,6 +12,19 @@ var _DEFAULTS = {
 };
 
 
+/**
+ * Entry point for Hydra web service.
+ *
+ * Call start() method to run service in an express server.
+ *
+ * @param options {Object}
+ * @param options.MOUNT_PATH {String}
+ *     default '/ws/hydra'.
+ *     site-root relative path to web service.
+ * @param options.PORT {Number}
+ *     default 8000.
+ *     server port.
+ */
 var HydraWebService = function (options) {
   var _this,
       _initialize,
@@ -20,7 +33,10 @@ var HydraWebService = function (options) {
       _port;
 
 
-  _this = {};
+  _this = {
+    get: null,
+    start: null
+  };
 
   _initialize = function (options) {
     options = extend(true, {}, _DEFAULTS, options);
@@ -60,12 +76,11 @@ var HydraWebService = function (options) {
 
     app = express();
 
+    // handle dynamic requests
     app.get(_mountPath + '/:method', _this.get);
 
+    // rest fall through to htdocs as static content.
     app.use(_mountPath, express.static(__dirname + '/htdocs'));
-
-    // TODO: implement server process
-    console.log('hello from HydraWebService#start()');
 
     app.listen(_port, function () {
       console.log('HydraWebService started');
