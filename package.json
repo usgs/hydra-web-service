@@ -17,6 +17,7 @@
   "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
+    "express": "^4.14.0",
     "ini": "^1.2.1",
     "mocha": "^2.5.3",
     "sinon": "^1.17.4"
