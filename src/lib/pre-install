@@ -1,19 +1,32 @@
-#!/usr/bin/env bash
+#!/usr/bin/env node
 
-pushd `dirname $0` > /dev/null 2>&1;
+var fs = require('fs'),
+    ini = require('ini');
 
-PHP_BIN=`which php`;
+var config,
+    configFile,
+    nonInteractive;
 
-if [ -z "$PHP_BIN" ]; then
-  read -p 'PHP executable not found, enter path to php: ' PHP_BIN;
-fi
+nonInteractive = false;
+process.argv.forEach(function (arg) {
+  if (arg == '--non-interactive') {
+    nonInteractive = true;
+  }
+});
 
-if [ -x "$PHP_BIN" ]; then
-  $PHP_BIN ./pre-install.php
-else
-  echo 'PHP executable not found, unable to run pre-install.php';
-  exit 1;
-fi
 
-popd > /dev/null 2>&1;
-exit 0;
+// work from same directory as this script
+process.chdir(__dirname);
+
+
+config = {};
+configFile = '../conf/config.ini';
+
+
+// TODO: make this more interactive
+config.MOUNT_PATH = '/ws/hydra';
+config.PORT = 8000;
+
+
+// write configuration
+fs.writeFileSync(configFile, ini.stringify(config));

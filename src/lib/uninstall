@@ -1,13 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env node
 
-push `dirname $0` > /dev/null 2>&1;
+var fs = require('fs');
 
-configFile='../conf/config.ini';
-httpdFile='../conf/httpd.conf';
 
-# Remove httpd config file, but leave the config INI file in place
-rm -vf ../httpd.conf;
+// work from same directory as this script
+process.chdir(__dirname);
 
-popd > /dev/null 2>&1;
 
-exit 0;
+var configFile;
+
+
+configFile = '../conf/config.ini';
+
+fs.unlinkSync(configFile);
