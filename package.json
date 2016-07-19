@@ -10,6 +10,7 @@
     "usgs"
   ],
   "scripts": {
+    "install": "./src/lib/pre-install --non-interactive",
     "start": "node src/server.js",
     "test": "./node_modules/mocha/bin/mocha test/**/*Test.js --reporter spec"
   },
@@ -23,6 +24,6 @@
     "sinon": "^1.17.4"
   },
   "engines": {
-    "node": ">=0.10.0"
+    "node": ">=4.2.4"
   }
 }

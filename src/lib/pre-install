@@ -1,10 +1,32 @@
-#!/usr/bin/env bash
+#!/usr/bin/env node
 
-pushd `dirname $0` > /dev/null 2>&1;
+var fs = require('fs'),
+    ini = require('ini');
+
+var config,
+    configFile,
+    nonInteractive;
+
+nonInteractive = false;
+process.argv.forEach(function (arg) {
+  if (arg == '--non-interactive') {
+    nonInteractive = true;
+  }
+});
 
 
-echo 'TODO: implement pre-install';
+// work from same directory as this script
+process.chdir(__dirname);
 
 
-popd > /dev/null 2>&1;
-exit 0;
+config = {};
+configFile = '../conf/config.ini';
+
+
+// TODO: make this more interactive
+config.MOUNT_PATH = '/ws/hydra';
+config.PORT = 8000;
+
+
+// write configuration
+fs.writeFileSync(configFile, ini.stringify(config));

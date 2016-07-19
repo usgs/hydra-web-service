@@ -1,10 +1,15 @@
-#!/usr/bin/env bash
+#!/usr/bin/env node
 
-push `dirname $0` > /dev/null 2>&1;
-
-
-echo 'TODO: implement uninstall';
+var fs = require('fs');
 
 
-popd > /dev/null 2>&1;
-exit 0;
+// work from same directory as this script
+process.chdir(__dirname);
+
+
+var configFile;
+
+
+configFile = '../conf/config.ini';
+
+fs.unlinkSync(configFile);
