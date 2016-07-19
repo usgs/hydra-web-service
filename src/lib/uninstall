@@ -10,6 +10,6 @@ process.chdir(__dirname);
 var configFile;
 
 
-configFile = '../conf/config.ini';
+configFile = '../conf/config.json';
 
 fs.unlinkSync(configFile);

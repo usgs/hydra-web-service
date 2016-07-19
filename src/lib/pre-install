@@ -20,7 +20,7 @@ process.chdir(__dirname);
 
 
 config = {};
-configFile = '../conf/config.ini';
+configFile = '../conf/config.json';
 
 
 // TODO: make this more interactive
@@ -29,4 +29,4 @@ config.PORT = 8000;
 
 
 // write configuration
-fs.writeFileSync(configFile, ini.stringify(config));
+fs.writeFileSync(configFile, JSON.stringify(config, null, 2));

@@ -1,8 +1,7 @@
 'use strict';
 
 var fs = require('fs'),
-    HydraWebService = require('./HydraWebService'),
-    ini = require('ini');
+    HydraWebService = require('./HydraWebService');
 
 
 var config,
@@ -10,15 +9,15 @@ var config,
     service;
 
 
-configPath = 'src/conf/config.ini';
+configPath = 'src/conf/config.json';
 
 if (!fs.existsSync(configPath)) {
   console.error('Application configuration not found,' +
-      ' run "src/lib/pre-install"');
+      ' run "node src/lib/pre-install"');
   process.exit(1);
 }
 
-config = ini.parse(fs.readFileSync(configPath, 'utf-8'));
+config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
 service = HydraWebService(config);
 
 

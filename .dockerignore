@@ -1,3 +1,3 @@
 .git
 node_modules
-src/conf/config.ini
+src/conf/config.json

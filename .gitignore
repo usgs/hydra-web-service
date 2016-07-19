@@ -1,4 +1,4 @@
 .DS_Store
 node_modules
 *.sublime-workspace
-src/conf/config.ini*
+src/conf/config.json
