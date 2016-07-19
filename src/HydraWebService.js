@@ -2,7 +2,8 @@
 'use strict';
 
 
-var express = require('express');
+var express = require('express'),
+    extend = require('extend');
 
 
 var _DEFAULTS = {};
@@ -19,7 +20,7 @@ var HydraWebService = function (options) {
   _this = {};
 
   _initialize = function (options) {
-    options = options || {};
+    options = extend({}, _DEFAULTS, options);
 
     _mountPath = options.MOUNT_PATH;
     _port = options.PORT;
