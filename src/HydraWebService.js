@@ -2,7 +2,8 @@
 'use strict';
 
 
-var express = require('express'),
+var EventMethod = require('./methods/EventMethod'),
+    express = require('express'),
     extend = require('extend');
 
 
@@ -43,6 +44,8 @@ var HydraWebService = function (options) {
 
     _mountPath = options.MOUNT_PATH;
     _port = options.PORT;
+
+    _this.eventMethod = EventMethod(options);
   };
 
 
@@ -57,15 +60,17 @@ var HydraWebService = function (options) {
    *     next handler in the chain.
    */
   _this.get = function (request, response, next) {
-    var url;
+    var method,
+        format;
 
-    url = request.url.replace(_mountPath, '');
-    if (url === '/event.json') {
-      response.send('Hello from event.json');
-      return;
+    method = request.params.method;
+    format = request.params.format;
+
+    if (method === 'event') {
+      _this.eventMethod.get(request, response, next);
+    } else {
+      next();
     }
-
-    next();
   };
 
   /**
@@ -77,7 +82,7 @@ var HydraWebService = function (options) {
     app = express();
 
     // handle dynamic requests
-    app.get(_mountPath + '/:method', _this.get);
+    app.get(_mountPath + '/:method.:format', _this.get);
 
     // rest fall through to htdocs as static content.
     app.use(_mountPath, express.static(__dirname + '/htdocs'));
