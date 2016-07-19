@@ -16,11 +16,12 @@
     "uninstall": "./src/lib/uninstall --non-interactive"
   },
   "license": "CC0-1.0",
-  "dependencies": {},
+  "dependencies": {
+    "express": "^4.14.0",
+    "ini": "^1.2.1"
+  },
   "devDependencies": {
     "chai": "^3.5.0",
-    "express": "^4.14.0",
-    "ini": "^1.2.1",
     "mocha": "^2.5.3",
     "sinon": "^1.17.4"
   },
