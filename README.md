@@ -13,7 +13,7 @@ Using the Generated Project
 - run `grunt` from the install directory
 
 ## Configuration
-- run `src/lib/pre-install` to setup config.ini
+- run `src/lib/pre-install` to setup `src/conf/config.json`
 - `MOUNT_PATH` is the base url for the application
 
 
