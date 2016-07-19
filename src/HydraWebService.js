@@ -2,7 +2,7 @@
 'use strict';
 
 
-var EventMethod = require('./methods/EventMethod'),
+var EventHandler = require('./handler/EventHandler'),
     express = require('express'),
     extend = require('extend');
 
@@ -36,7 +36,9 @@ var HydraWebService = function (options) {
 
   _this = {
     get: null,
-    start: null
+    handlers: null,
+    onError: null,
+    onOk: null
   };
 
   _initialize = function (options) {
@@ -45,12 +47,17 @@ var HydraWebService = function (options) {
     _mountPath = options.MOUNT_PATH;
     _port = options.PORT;
 
-    _this.eventMethod = EventMethod(options);
+    _this.handlers = {
+      'event.json': EventHandler
+    }
   };
 
 
   /**
    * Handle a dynamic get request.
+   *
+   * Routes to appropriate handler (see handleGet),
+   * or calls next() if no handler matches the requested method.
    *
    * @param request {HTTPRequest}
    *     the http request.
@@ -60,18 +67,106 @@ var HydraWebService = function (options) {
    *     next handler in the chain.
    */
   _this.get = function (request, response, next) {
-    var method,
-        format;
+    var handler,
+        method,
+        onDone,
+        onError,
+        onOk;
 
+    // method is configured route parameter
     method = request.params.method;
-    format = request.params.format;
-
-    if (method === 'event') {
-      _this.eventMethod.get(request, response, next);
-    } else {
+    if (!(method in _this.handlers)) {
       next();
+      return;
+    }
+
+    try {
+      handler = _this.handlers[method]({
+        // TODO: configure handler with factory, etc
+      });
+      // start processing
+      handler.get(request.query)
+          // process successful result
+          .then(function (data) {
+            _this.onOk(data, request, response, next)
+          })
+          // handle any processing errors
+          .catch(function (err) {
+            _this.onError(err, request, response, next);
+          })
+          // finally, clean up
+          .then(function () {
+            handler.destroy();
+            handler = null;
+          });
+    } catch (e) {
+      // error creating/starting handler
+      _this.onError(e, request, response, next);
     }
   };
+
+  /**
+   * Handle an error.
+   *
+   * @param err {Error}
+   *     the Error that occured.
+   * @param request {Request}
+   *     the associated request.
+   * @param response {Response}
+   *     the associated response.
+   * @param next {Function}
+   *     call to pass request to next handler.
+   */
+  _this.onError = function (err, request, response/*, next*/) {
+    var message;
+
+    if (err) {
+      if (err.stack) {
+        message = err.stack;
+      } else if (err.message) {
+        message = err.message;
+      }
+    }
+
+    if (!message) {
+      message = 'internal server error';
+    }
+
+    response.status(500);
+    response.json({
+      error: true,
+      message: message
+    });
+  };
+
+  /**
+   * Handle an result without errors.
+   *
+   * @param data {Object}
+   *     response data.
+   *     when null, pass request to next handler.
+   * @param request {Request}
+   *     the associated request.
+   * @param response {Response}
+   *     the associated response.
+   * @param next {Function}
+   *     call to pass request to next handler.
+   */
+  _this.onOk = function (data, request, response/*, next*/) {
+    if (data === null) {
+      next();
+      return;
+    }
+    response.json({
+      data: data,
+      error: false,
+      metadata: {
+        date: new Date().toISOString(),
+        url: request.originalUrl
+      }
+    });
+  };
+
 
   /**
    * Run hydra web service in an express server.
@@ -82,7 +177,7 @@ var HydraWebService = function (options) {
     app = express();
 
     // handle dynamic requests
-    app.get(_mountPath + '/:method.:format', _this.get);
+    app.get(_mountPath + '/:method', _this.get);
 
     // rest fall through to htdocs as static content.
     app.use(_mountPath, express.static(__dirname + '/htdocs'));
