@@ -12,7 +12,7 @@
   "scripts": {
     "install": "node src/lib/pre-install --non-interactive",
     "start": "node src/server.js",
-    "test": "node_modules/mocha/bin/mocha test/**/*Test.js --reporter spec",
+    "test": "node_modules/mocha/bin/mocha 'test/**/*Test.js' --reporter spec",
     "uninstall": "node src/lib/uninstall --non-interactive"
   },
   "license": "CC0-1.0",

@@ -25,10 +25,13 @@ var EventMethod = function (options) {
 
   _initialize = function (options) {
     options = extend({}, _DEFAULTS, options);
-
-    _this.path = options.path;
   };
 
+
+  _this.destroy = function () {
+    _initialize = null;
+    _this = null;
+  };
 
   _this.get = function (request, response, next) {
     var result;
@@ -41,7 +44,8 @@ var EventMethod = function (options) {
       }
       response.json(result);
     } catch (e) {
-      response.status(500).json({
+      response.status(500);
+      response.json({
         error: true,
         message: e.message
       });
