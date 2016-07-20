@@ -4,10 +4,14 @@
 
 var EventHandler = require('./handler/EventHandler'),
     express = require('express'),
-    extend = require('extend');
+    extend = require('extend'),
+    HydraFactory = require('./HydraFactory');
 
 
 var _DEFAULTS = {
+  DB_DSN: null,
+  DB_USER: null,
+  DB_PASS: null,
   MOUNT_PATH: '/ws/hydra',
   PORT: 8000
 };
@@ -46,6 +50,12 @@ var HydraWebService = function (options) {
 
     _mountPath = options.MOUNT_PATH;
     _port = options.PORT;
+
+    _this.factory = HydraFactory({
+      dsn: options.DB_DSN,
+      password: options.DB_PASS,
+      username: options.DB_USER
+    });
 
     _this.handlers = {
       'event.json': EventHandler
@@ -87,7 +97,7 @@ var HydraWebService = function (options) {
 
     try {
       handler = _this.handlers[method]({
-        // TODO: configure handler with factory, etc
+        factory: _this.factory
       });
       // start processing
       handler.get(request.query)
