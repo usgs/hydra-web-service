@@ -1,7 +1,7 @@
 {
   "name": "hydra-web-service",
   "version": "0.1.0",
-  "description": "Web service for Hydra database.",
+  "description": "Web service for information from Hydra backend.",
   "repository": {
     "type": "git",
     "url": "https://github.com/usgs/hydra-web-service.git"

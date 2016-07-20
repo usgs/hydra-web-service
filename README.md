@@ -1,5 +1,6 @@
 hydra-web-service
 ==============
+[![Build Status](https://travis-ci.org/usgs/hydra-web-service.svg?branch=master)](https://travis-ci.org/usgs/hydra-web-service)
 
 Web service for information from Hydra backend.
 
