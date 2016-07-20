@@ -32,8 +32,8 @@ var AbstractHandler = function () {
    *     promise representing handling for this request.
    */
   _this.get = function (/*params*/) {
-    return new Promise(function (/* resolve, reject */) {
-      throw new Error('get not implemented');
+    return new Promise(function (resolve, reject) {
+      reject(new Error('get not implemented'));
     });
   };
 
