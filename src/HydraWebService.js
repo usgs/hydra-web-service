@@ -49,7 +49,15 @@ var HydraWebService = function (options) {
 
     _this.handlers = {
       'event.json': EventHandler
-    }
+    };
+  };
+
+
+  _this.destroy = function () {
+    _mountPath = null;
+    _port = null;
+    _this.handlers = null;
+    _this = null;
   };
 
 
@@ -68,10 +76,7 @@ var HydraWebService = function (options) {
    */
   _this.get = function (request, response, next) {
     var handler,
-        method,
-        onDone,
-        onError,
-        onOk;
+        method;
 
     // method is configured route parameter
     method = request.params.method;
@@ -88,7 +93,7 @@ var HydraWebService = function (options) {
       handler.get(request.query)
           // process successful result
           .then(function (data) {
-            _this.onOk(data, request, response, next)
+            _this.onOk(data, request, response, next);
           })
           // handle any processing errors
           .catch(function (err) {
@@ -118,24 +123,17 @@ var HydraWebService = function (options) {
    *     call to pass request to next handler.
    */
   _this.onError = function (err, request, response/*, next*/) {
-    var message;
-
-    if (err) {
-      if (err.stack) {
-        message = err.stack;
-      } else if (err.message) {
-        message = err.message;
-      }
+    if (request) {
+      console.log('url=' + request.originalUrl);
     }
-
-    if (!message) {
-      message = 'internal server error';
+    if (err && err.stack) {
+      console.log(err.stack);
     }
 
     response.status(500);
     response.json({
       error: true,
-      message: message
+      message: (err && err.message) ? err.message : 'internal server error'
     });
   };
 
@@ -152,7 +150,7 @@ var HydraWebService = function (options) {
    * @param next {Function}
    *     call to pass request to next handler.
    */
-  _this.onOk = function (data, request, response/*, next*/) {
+  _this.onOk = function (data, request, response, next) {
     if (data === null) {
       next();
       return;

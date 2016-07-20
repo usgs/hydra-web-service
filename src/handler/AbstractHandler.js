@@ -1,9 +1,6 @@
 'use strict';
 
 
-var _DEFAULTS = {};
-
-
 /**
  * Base class to define Handler API.
  *
@@ -34,7 +31,7 @@ var AbstractHandler = function () {
    * @return {Promise}
    *     promise representing handling for this request.
    */
-  _this.get = function (params) {
+  _this.get = function (/*params*/) {
     return new Promise(function (/* resolve, reject */) {
       throw new Error('get not implemented');
     });

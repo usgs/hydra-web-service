@@ -35,7 +35,7 @@ var EventHandler = function (options) {
   };
 
   _this.get = function (params) {
-    return new Promise(function (resolve, reject) {
+    return new Promise(function (resolve/*, reject*/) {
       // TODO: something way more interesting
       resolve({
         event: 'event',
