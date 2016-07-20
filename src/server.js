@@ -12,7 +12,7 @@ var config,
 configPath = 'src/conf/config.json';
 
 if (!fs.existsSync(configPath)) {
-  console.error('Application configuration not found,' +
+  process.stderr.write('Application configuration not found,' +
       ' run "node src/lib/pre-install"');
   process.exit(1);
 }

@@ -124,10 +124,10 @@ var HydraWebService = function (options) {
    */
   _this.onError = function (err, request, response/*, next*/) {
     if (request) {
-      console.log('url=' + request.originalUrl);
+      process.stderr.write('url=' + request.originalUrl);
     }
     if (err && err.stack) {
-      console.log(err.stack);
+      process.stderr.write(err.stack);
     }
 
     response.status(500);
@@ -181,8 +181,8 @@ var HydraWebService = function (options) {
     app.use(_mountPath, express.static(__dirname + '/htdocs'));
 
     app.listen(_port, function () {
-      console.log('HydraWebService started');
-      console.log('http://localhost:' + _port + _mountPath + '/');
+      process.stderr.write('HydraWebService started');
+      process.stderr.write('http://localhost:' + _port + _mountPath + '/');
     });
   };
 

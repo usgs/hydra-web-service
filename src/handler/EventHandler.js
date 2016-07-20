@@ -8,6 +8,7 @@ var AbstractHandler = require('./AbstractHandler'),
 var _DEFAULTS;
 
 _DEFAULTS = {
+  dataFactory: null
 };
 
 
@@ -26,6 +27,8 @@ var EventHandler = function (options) {
 
   _initialize = function (options) {
     options = extend({}, _DEFAULTS, options);
+
+    _this.dataFactory = options.dataFactory;
   };
 
 
