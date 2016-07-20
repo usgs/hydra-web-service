@@ -181,8 +181,8 @@ var HydraWebService = function (options) {
     app.use(_mountPath, express.static(__dirname + '/htdocs'));
 
     app.listen(_port, function () {
-      process.stderr.write('HydraWebService started');
-      process.stderr.write('http://localhost:' + _port + _mountPath + '/');
+      process.stderr.write('HydraWebService listening ' +
+          'http://localhost:' + _port + _mountPath + '/\n');
     });
   };
 

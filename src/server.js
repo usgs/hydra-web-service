@@ -13,7 +13,7 @@ configPath = 'src/conf/config.json';
 
 if (!fs.existsSync(configPath)) {
   process.stderr.write('Application configuration not found,' +
-      ' run "node src/lib/pre-install"');
+      ' run "node src/lib/pre-install"\n');
   process.exit(1);
 }
 
