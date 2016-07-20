@@ -6,18 +6,12 @@
 
 
 var fs = require('fs'),
-    oracledb;
-
-try {
-  oracledb = require('oracledb');
-} catch (e) {
-  process.stderr.write('"oracledb" not installed\n');
-  process.exit(1);
-}
+    HydraFactory = require('./HydraFactory');
 
 
 var config,
-    configPath;
+    configPath,
+    factory;
 
 configPath = 'src/conf/config.json';
 
@@ -29,14 +23,14 @@ if (!fs.existsSync(configPath)) {
 
 config = JSON.parse(fs.readFileSync(configPath));
 
-// connect
-oracledb.getConnection({
-  connectString: config.DB_DSN,
-  user: config.DB_USER,
-  password: config.DB_PASS
-})
-// use connection
-.then(function (connection) {
+factory = HydraFactory({
+  dsn: config.DB_DSN,
+  password: config.DB_PASS,
+  username: config.DB_USER
+});
+
+// connect and execute query
+factory.getConnection().then(function (connection) {
   process.stderr.write('Connected, executing test query\n');
   return connection.execute('select \'testvalue\' from dual')
       .then(function (result) {
