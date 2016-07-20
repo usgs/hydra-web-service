@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "node node_modules/.bin/npm-run-all --parallel watch start",
-    "install": "node src/lib/pre-install --non-interactive",
+    "install": "node src/lib/pre-install",
     "lint": "node node_modules/.bin/eslint '**/*.js'",
     "start": "node node_modules/.bin/nodemon --watch src src/server.js",
     "test": "node node_modules/.bin/mocha 'test/**/*Test.js' --reporter spec",

@@ -15,17 +15,14 @@ var configFile,
 configFile = '../conf/config.json';
 
 nonInteractive = false;
-process.argv.forEach(function (arg) {
-  if (arg == '--non-interactive') {
-    nonInteractive = true;
-    process.stderr.write('Running in non-interactive mode\n');
+if (process.env.NON_INTERACTIVE === 'true') {
+  nonInteractive = true;
+  process.stderr.write('Running in non-interactive mode\n');
+  if (fs.existsSync(configFile)) {
+    process.stderr.write('Configuration already exists,' +
+        ' refusing to overwrite in non-interactive mode\n');
+    process.exit();
   }
-});
-
-if (nonInteractive && fs.existsSync(configFile)) {
-  process.stderr.write('Configuration already exists and non-interactive,' +
-      ' exiting\n');
-  process.exit();
 }
 
 
