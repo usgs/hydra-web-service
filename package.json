@@ -20,6 +20,10 @@
     "watch:src": "watch 'npm run lint:src && npm run test' src",
     "watch:test": "watch 'npm run lint:test && npm run test' test"
   },
+  "pre-commit": [
+    "lint",
+    "test"
+  ],
   "license": "CC0-1.0",
   "dependencies": {
     "express": "^4.14.0"
