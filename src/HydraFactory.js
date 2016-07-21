@@ -131,10 +131,11 @@ var HydraFactory = function (options) {
               aei.iPubVersion,
               aei.idComment,
               aei.idInternalComment,
-              mt.sMagAbbrev
+              aei.sEventType,
+              am.sMagAbbrev
           FROM
               all_events_info aei
-              JOIN magtype mt ON (mt.iMagType = aei.iMagType)
+              JOIN all_magtypes am ON (am.iMagType = aei.iMagType)
           WHERE
               aei.huidEvent = :huid`;
 
@@ -172,7 +173,7 @@ var HydraFactory = function (options) {
 
     sql = `
         SELECT
-          aei.huidevent,
+          amfeiw.huidevent,
           amfeiw.idMag,
           amfeiw.idActualMag,
           amfeiw.dMagAvg,
@@ -194,13 +195,11 @@ var HydraFactory = function (options) {
           amfeiw.idInstComment,
           amfeiw.idOrigin,
           amfeiw.idComment,
-          mt.sMagAbbrev
+          amfeiw.sMagAbbrev
         FROM
           all_mags_for_event_info_wc amfeiw
-          JOIN all_events_info aei ON (aei.idEvent = amfeiw.idEvent)
-          JOIN magtype mt ON (mt.iMagType = amfeiw.iMagType)
         WHERE
-          aei.huidevent = :huid`;
+          amfeiw.huidevent = :huid`;
 
     return connection.execute(sql, {huid: huid})
         .then(function (result) {
@@ -229,7 +228,7 @@ var HydraFactory = function (options) {
         magnitudeType: row.SMAGABBREV,
         magnitudes: [],
         title: row.SREGION,
-        type: row.TIEVENTTYPE
+        type: row.SEVENTTYPE
       },
       geometry: {
         type: 'Point',
