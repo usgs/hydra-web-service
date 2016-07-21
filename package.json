@@ -11,7 +11,7 @@
   ],
   "scripts": {
     "dev": "node node_modules/.bin/npm-run-all --parallel watch start",
-    "install": "node src/lib/pre-install --non-interactive",
+    "install": "node src/lib/pre-install",
     "lint": "node node_modules/.bin/eslint '**/*.js'",
     "start": "node node_modules/.bin/nodemon --watch src src/server.js",
     "test": "node node_modules/.bin/mocha 'test/**/*Test.js' --reporter spec",
@@ -26,6 +26,7 @@
   "dependencies": {
     "express": "^4.14.0",
     "extend": "^3.0.0",
+    "inquirer": "^1.1.2",
     "nodemon": "^1.9.2"
   },
   "devDependencies": {
@@ -36,6 +37,9 @@
     "pre-commit": "^1.1.3",
     "sinon": "^1.17.4",
     "watch": "^0.19.1"
+  },
+  "optionalDependencies": {
+    "oracledb": "^1.10.0"
   },
   "engines": {
     "node": ">=4.2.4"
