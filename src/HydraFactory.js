@@ -248,7 +248,7 @@ var HydraFactory = function (options) {
             json = _this._parseMagnitude(result.rows[0]);
 
             return _this._getMagnitudeMomentTensor(connection,
-                result.rows[0].IDMAG, false).then(function (momentTensor) {
+                result.rows[0].IDMAG, true).then(function (momentTensor) {
                   json.properties.momentTensors = momentTensor;
                   return json;
                 });
