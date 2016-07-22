@@ -248,8 +248,8 @@ var HydraFactory = function (options) {
             json = _this._parseMagnitude(result.rows[0]);
 
             return _this._getMagnitudeMomentTensor(connection,
-                result.rows[0].IDMAG).then(function (momentTensor) {
-                  json.properties.momentTensor = momentTensor;
+                result.rows[0].IDMAG, false).then(function (momentTensor) {
+                  json.properties.momentTensors = momentTensor;
                   return json;
                 });
           });
@@ -262,13 +262,15 @@ var HydraFactory = function (options) {
    * @param connection {Connection}
    *     database connection.
    * @param idmag {Integer}
-   *     event id.
+   *     magnitude id.
+   * @param getPref {Boolean}
+   *     flag indicating whether to only get the preferred moment tensor
    * @return {Promise}
    *     promise representing magnitude moment tensor information:
    *     resolves with moment tensor object when successfully retrieved,
    *     rejects with Error when unsuccessful.
    */
-  _this._getMagnitudeMomentTensor = function (connection, idMag) {
+  _this._getMagnitudeMomentTensor = function (connection, idMag, getPref) {
     var sql;
 
     sql = `
@@ -287,6 +289,7 @@ var HydraFactory = function (options) {
           amws.dAFPDip,
           amws.dAFPRake,
           amws.idMag,
+          amws.IterationIdMag,
           amws.dM0,
           amws.iScalarExp,
           amws.dMisfit,
@@ -330,15 +333,22 @@ var HydraFactory = function (options) {
         FROM
           all_mw_solns_for_origin_xtrm amws
         WHERE
-          amws.idMag = :idMag`;
+          amws.IterationIdMag = :idMag `;
+
+    // if we're only getting the preferred solution
+    if (getPref === true) {
+      sql += 'AND amws.idMag = :idMag';
+    }
 
     return connection.execute(sql, {idMag: idMag})
         .then(function (result) {
           // not all magnitudes have a moment tensor
           if (result.rows.length === 0) {
             return null;}
-
-          return _this._parseMagnitudeMomentTensor(result.rows[0]);
+          else if (result.rows.length === 1) {
+            return _this._parseMagnitudeMomentTensor(result.rows[0]);}
+          else {
+            return result.rows.map(_this._parseMagnitudeMomentTensor);}
         });
   };
 
@@ -518,6 +528,7 @@ var HydraFactory = function (options) {
    */
   _this._parseMagnitudeMomentTensor = function (row) {
     var mt,
+        preferred,
         scalarExponent,
         moment,
         mpp,
@@ -526,6 +537,13 @@ var HydraFactory = function (options) {
         mrt,
         mtp,
         mtt;
+
+    if (row.IDMAG > 0){
+      preferred = true;
+    }
+    else {
+      preferred = false;
+    }
 
     // convert scalar exponent from dyne-cm to newton-meters (10^-7)
     scalarExponent = Math.pow(10, (row.ISCALAREXP - 7));
@@ -570,7 +588,8 @@ var HydraFactory = function (options) {
         'tensor-mrt': mrt.toExponential(),
         'tensor-mtp': mtp.toExponential(),
         'tensor-mtt': mtt.toExponential(),
-        'variance-reduction' : row.DMISFITVR
+        'variance-reduction' : row.DMISFITVR,
+        'preferred-solution' : preferred
       },
       geometry: {
         type: 'Point',
