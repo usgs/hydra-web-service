@@ -84,6 +84,35 @@ describe('HydraWebService', function () {
       expect(handler.get.calledWith(request.query)).to.equal(true);
     });
 
+    it('passes factory to handler constructor', function () {
+      var factory,
+          handler,
+          request;
+
+      handler = {
+        get: sinon.stub().returns({
+          then: function () {
+            return this;
+          },
+          catch: function () {
+            return this;
+          }
+        })
+      };
+      factory = sinon.stub().returns(handler);
+      service.handlers['test handler'] = factory;
+      request = {
+        params: {
+          method: 'test handler'
+        },
+        query: {}
+      };
+
+      service.get(request, null, null);
+      expect(factory.calledOnce).to.equal(true);
+      expect(factory.getCall(0).args[0].factory).to.equal(service.factory);
+    });
+
     it('calls onOk when handler promise resolves', function (done) {
       var args,
           data,
