@@ -10,13 +10,13 @@
     "usgs"
   ],
   "scripts": {
-    "dev": "node node_modules/.bin/npm-run-all --parallel watch start",
+    "dev": "npm-run-all --parallel watch start",
     "install": "node src/lib/pre-install",
-    "lint": "node node_modules/.bin/eslint '**/*.js'",
-    "start": "node node_modules/.bin/nodemon --watch src src/server.js",
-    "test": "node node_modules/.bin/mocha 'test/**/*Test.js' --reporter spec",
+    "lint": "eslint \"**/*.js\"",
+    "start": "nodemon --watch src src/server.js",
+    "test": "mocha \"test/**/*Test.js\" --reporter spec",
     "uninstall": "node src/lib/uninstall --non-interactive",
-    "watch": "node node_modules/.bin/watch 'npm run lint && npm run test' src test"
+    "watch": "watch \"npm run lint && npm run test\" src test"
   },
   "pre-commit": [
     "lint",
