@@ -12,9 +12,9 @@
   "scripts": {
     "dev": "npm-run-all --parallel watch start",
     "install": "node src/lib/pre-install",
-    "lint": "eslint '**/*.js'",
+    "lint": "eslint \"**/*.js\"",
     "start": "nodemon --watch src src/server.js",
-    "test": "mocha 'test/**/*Test.js' --reporter spec",
+    "test": "mocha \"test/**/*Test.js\" --reporter spec",
     "uninstall": "node src/lib/uninstall --non-interactive",
     "watch": "watch \"npm run lint && npm run test\" src test"
   },
