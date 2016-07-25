@@ -352,9 +352,9 @@ var HydraFactory = function (options) {
           amws.idBBDepth,
           amws.iMethod,
           amws.idSTF,
-          amws.dSrcTime1,
-          amws.dSrcTime2,
-          amws.dSrcTime3,
+          amws.dSTFRiseTimeSec,
+          amws.dSTFMaxAmpTimeSec,
+          amws.dSTFDecayTimeSec,
           amws.idMwInput,
           amws.MwIn_iMagType,
           amws.MwIn_idAuthor,
@@ -509,8 +509,8 @@ var HydraFactory = function (options) {
         'is-preferred-for-type': Boolean(row.BPREFERREDBYTYPE),
         'num-stations-associated': row.STAMAG_COUNT,
         'num-stations-used': row.INUMMAGS,
+        'idmag': row.IDMAG,
       },
-//      geometry: null,
       type: 'Feature'
     };
 
@@ -572,7 +572,9 @@ var HydraFactory = function (options) {
         mrr,
         mrt,
         mtp,
-        mtt;
+        mtt,
+        stfType,
+        stfDuration;
 
     if (row.IDMAG > 0){
       preferred = true;
@@ -595,9 +597,22 @@ var HydraFactory = function (options) {
     mtp = row.DMXY * scalarExponent * -1;
     mtt = row.DMXX * scalarExponent;
 
-    // todo:
-    // need to generate ntp axis
-    // need to convert sourcetime
+    // convert sourcetime
+    stfDuration = row.DSTFRISETIMESEC + row.DSTFMAXAMPTIMESEC +
+      row.DSTFDECAYTIMESEC;
+
+    if((row.DSTFRISETIMESEC === 0) && (row.DSTFMAXAMPTIMESEC > 0) &&
+      (row.DSTFDECAYTIMESEC === 0)) {
+      stfType = 'box_car';
+    } else if((row.DSTFRISETIMESEC > 0) && (row.DSTFMAXAMPTIMESEC === 0) &&
+      (row.DSTFDECAYTIMESEC > 0)) {
+      stfType = 'triangle';
+    } else if((row.DSTFRISETIMESEC > 0) && (row.DSTFMAXAMPTIMESEC > 0) &&
+      (row.DSTFDECAYTIMESEC > 0)) {
+      stfType = 'trapezoid';
+    } else {
+      stfType = 'unknown';
+    }
 
     mt = {
       'azimuthal-gap': row.IGAP,
@@ -617,6 +632,10 @@ var HydraFactory = function (options) {
       'num-stations-associated': row.STAMAG_COUNT,
       'num-stations-used': row.INUMMAGS,
       'scalar-moment': moment.toExponential(),
+      'sourcetime-decaytime': row.DSTFDECAYTIMESEC,
+      'sourcetime-duration': stfDuration,
+      'sourcetime-risetime': row.DSTFRISETIMESEC,
+      'sourcetime-type': stfType,
       'tensor-mpp': mpp.toExponential(),
       'tensor-mrp': mrp.toExponential(),
       'tensor-mrr': mrr.toExponential(),
