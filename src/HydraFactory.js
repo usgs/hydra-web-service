@@ -188,7 +188,12 @@ var HydraFactory = function (options) {
    */
   _this.getMagnitude = function (huid, author, installation, magtype) {
     return _this.getConnection().then(function (connection) {
-      var sql;
+      var sql,
+          index,
+          getPref;
+
+      // get only preferred solution
+      getPref = true;
 
       sql = `
           SELECT
@@ -248,8 +253,39 @@ var HydraFactory = function (options) {
             json = _this._parseMagnitude(result.rows[0]);
 
             return _this._getMagnitudeMomentTensor(connection,
-                result.rows[0].IDMAG, true).then(function (momentTensor) {
-                  json.properties.momentTensors = momentTensor;
+                result.rows[0].IDMAG, getPref).then(function (momentTensor) {
+                  json.properties['moment-tensors'] = [ momentTensor ];
+
+                  // no geometry if we didn't get a moment tensor
+                  if (momentTensor === null) {
+                    json.geometry = null;
+                  }
+                  // if we got an array of them, use the preferred-solution
+                  else if (Array.isArray(momentTensor)) {
+                    for (index = 0; index < momentTensor.length; index++) {
+                      if (momentTensor[index]['preferred-solution'] === true) {
+                        json.geometry = {
+                          type: 'Point',
+                          coordinates: [
+                            momentTensor[index]['derived-longitude'],
+                            momentTensor[index]['derived-latitude'],
+                            momentTensor[index]['derived-depth']
+                          ]
+                        };
+                      }
+                    }
+                  // if we only got one, use it
+                  } else {
+                    json.geometry = {
+                      type: 'Point',
+                      coordinates: [
+                        momentTensor['derived-longitude'],
+                        momentTensor['derived-latitude'],
+                        momentTensor['derived-depth']
+                      ]
+                    };
+                  }
+
                   return json;
                 });
           });
@@ -474,7 +510,7 @@ var HydraFactory = function (options) {
         'num-stations-associated': row.STAMAG_COUNT,
         'num-stations-used': row.INUMMAGS,
       },
-      geometry: null,
+//      geometry: null,
       type: 'Feature'
     };
 
@@ -564,42 +600,31 @@ var HydraFactory = function (options) {
     // need to convert sourcetime
 
     mt = {
-      properties: {
-        'azimuthal-gap': row.IGAP,
-        'condition': row.DMAXEIGENVALUE / row.DMINEIGENVALUE,
-        'derived-depth': row.DDEPTH,
-        'derived-eventtime': new Date(row.TORIGIN * 1000).toISOString(),
-        'derived-latitude': row.DLAT,
-        'derived-longitude': row.DLON,
-        'fit': row.DMISFIT,
-        'nodal-plane-1-dip': row.DPFPDIP,
-        'nodal-plane-1-slip': row.DPFPRAKE,
-        'nodal-plane-1-strike': row.DPFPSTRIKE,
-        'nodal-plane-2-dip': row.DAFPDIP,
-        'nodal-plane-2-slip': row.DAFPRAKE,
-        'nodal-plane-2-strike': row.DAFPSTRIKE,
-        'percent-double-couple': row.DPERCENTDC/100,
-        'num-stations-associated': row.STAMAG_COUNT,
-        'num-stations-used': row.INUMMAGS,
-        'scalar-moment': moment.toExponential(),
-        'tensor-mpp': mpp.toExponential(),
-        'tensor-mrp': mrp.toExponential(),
-        'tensor-mrr': mrr.toExponential(),
-        'tensor-mrt': mrt.toExponential(),
-        'tensor-mtp': mtp.toExponential(),
-        'tensor-mtt': mtt.toExponential(),
-        'variance-reduction' : row.DMISFITVR,
-        'preferred-solution' : preferred
-      },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          row.DLON,
-          row.DLAT,
-          row.DDEPTH
-        ]
-      },
-      type: 'Feature'
+      'azimuthal-gap': row.IGAP,
+      'condition': row.DMAXEIGENVALUE / row.DMINEIGENVALUE,
+      'derived-depth': row.DDEPTH,
+      'derived-eventtime': new Date(row.TORIGIN * 1000).toISOString(),
+      'derived-latitude': row.DLAT,
+      'derived-longitude': row.DLON,
+      'fit': row.DMISFIT,
+      'nodal-plane-1-dip': row.DPFPDIP,
+      'nodal-plane-1-slip': row.DPFPRAKE,
+      'nodal-plane-1-strike': row.DPFPSTRIKE,
+      'nodal-plane-2-dip': row.DAFPDIP,
+      'nodal-plane-2-slip': row.DAFPRAKE,
+      'nodal-plane-2-strike': row.DAFPSTRIKE,
+      'percent-double-couple': row.DPERCENTDC/100,
+      'num-stations-associated': row.STAMAG_COUNT,
+      'num-stations-used': row.INUMMAGS,
+      'scalar-moment': moment.toExponential(),
+      'tensor-mpp': mpp.toExponential(),
+      'tensor-mrp': mrp.toExponential(),
+      'tensor-mrr': mrr.toExponential(),
+      'tensor-mrt': mrt.toExponential(),
+      'tensor-mtp': mtp.toExponential(),
+      'tensor-mtt': mtt.toExponential(),
+      'variance-reduction' : row.DMISFITVR,
+      'preferred-solution' : preferred
     };
 
     return mt;
