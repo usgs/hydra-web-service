@@ -26,6 +26,9 @@ var AbstractHandler = function () {
   /**
    * Handle a get request.
    *
+   * NOTE: this method should generally not throw Exceptions, and instead
+   * should return a rejected promise.
+   *
    * @param params {Object}
    *     query parameters for request.
    * @return {Promise}

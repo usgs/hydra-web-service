@@ -32,14 +32,28 @@ var EventHandler = function (options) {
   };
 
 
+  /**
+   * Free references.
+   */
   _this.destroy = function () {
     _initialize = null;
     _this = null;
   };
 
+  /**
+   * Get an event.
+   *
+   * @param params {Object}
+   *     request parameters.
+   * @param params.huid {String}
+   *     requested event id.
+   * @return {Promise}
+   *     promise that resolves with the requested event,
+   *     or rejects with an error.
+   */
   _this.get = function (params) {
-    if (!params.huid) {
-      throw new Error('huid is a required parameter');
+    if (!params || !params.huid) {
+      return Promise.reject(new Error('huid is a required parameter'));
     }
     return _this.factory.getEvent(params.huid);
   };

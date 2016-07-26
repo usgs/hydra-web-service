@@ -29,16 +29,21 @@ describe('handler/EventHandler', function () {
   });
 
   describe('get', function () {
-    it('throws an error if params.huid is not set', function () {
-      var callGet,
-          handler;
+    it('returns rejected promise if params.huid is not set', function (done) {
+      var handler;
 
       handler = EventHandler();
-      callGet = function () {
-        handler.get({});
-      };
-
-      expect(callGet).to.throw(Error);
+      handler.get({})
+          .then(function () {
+            // expect a rejected promise
+            handler.destroy();
+            done(false);
+          })
+          .catch(function (err) {
+            expect(err.message).to.equal('huid is a required parameter');
+            handler.destroy();
+            done();
+          });
     });
 
     it('returns factory.getEvent with huid', function () {
