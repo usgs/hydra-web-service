@@ -450,6 +450,14 @@ var HydraFactory = function (options) {
     var eventSummary;
 
     eventSummary = {
+      geometry: {
+        coordinates: [
+          row.DLON,
+          row.DLAT,
+          row.DDEPTH
+        ],
+        type: 'Point'
+      },
       id: row.HUIDEVENT,
       properties: {
         eventtime: new Date(row.TORIGIN * 1000).toISOString(),
@@ -459,14 +467,7 @@ var HydraFactory = function (options) {
         title: row.SREGION,
         type: row.SEVENTTYPE
       },
-      geometry: {
-        type: 'Point',
-        coordinates: [
-          row.DLON,
-          row.DLAT,
-          row.DDEPTH
-        ]
-      }
+      type: 'Feature'
     };
 
     return eventSummary;
