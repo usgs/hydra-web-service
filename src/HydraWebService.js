@@ -3,6 +3,7 @@
 
 
 var EventHandler = require('./handler/EventHandler'),
+    MagnitudeHandler = require('./handler/MagnitudeHandler'),
     express = require('express'),
     extend = require('extend'),
     HydraFactory = require('./HydraFactory');
@@ -58,7 +59,8 @@ var HydraWebService = function (options) {
     });
 
     _this.handlers = {
-      'event.json': EventHandler
+      'event.json': EventHandler,
+      'magnitude.json': MagnitudeHandler
     };
   };
 

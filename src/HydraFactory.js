@@ -171,6 +171,224 @@ var HydraFactory = function (options) {
   };
 
   /**
+   * Obtain information for specific magnitude.
+   *
+   * @param huid {String}
+   *     unique identifier for event.
+   * @param author {String}
+   *     unique identifier for magnitude author.
+   * @param installation {String}
+   *     unique identifier for mangitude author installation.
+   * @param magtype {String}
+   *     unique identifier for magnitude type.
+   * @return {Promise}
+   *     promise representing magnitude information:
+   *     resolves with Magnitude object when successfully retrieved,
+   *     rejects with Error when unsuccessful.
+   */
+  _this.getMagnitude = function (huid, author, installation, magtype) {
+    return _this.getConnection().then(function (connection) {
+      var sql,
+          index,
+          getPref;
+
+      // get only preferred solution
+      getPref = true;
+
+      sql = `
+          SELECT
+            amfeiw.idMag,
+            amfeiw.idActualMag,
+            amfeiw.dMagAvg,
+            amfeiw.iNumMags,
+            amfeiw.stamag_count,
+            amfeiw.dMagErr,
+            amfeiw.iMagType,
+            amfeiw.sMagAbbrev,
+            amfeiw.dMwMag,
+            amfeiw.dMwError,
+            amfeiw.dWeight,
+            decode(zero_if_null(pmbt.idbind),pmbt.idbind,1,0) bPreferredByType,
+            amfeiw.idAuthor,
+            amfeiw.sName,
+            amfeiw.sNameHR,
+            amfeiw.iType,
+            amfeiw.idCommentAuthor,
+            amfeiw.idInst,
+            amfeiw.sInstCode,
+            amfeiw.sInstNameHR,
+            amfeiw.idInstComment,
+            amfeiw.idOrigin,
+            amfeiw.idEvent,
+            amfeiw.huidEvent,
+            amfeiw.idComment,
+            aai.idAuthor idAssocAuthor,
+            aai.sName sAssocName,
+            aai.sNameHR sAssocNameHR,
+            aai.iType iAssocType,
+            aai.idInst idAssocInst,
+            aai.sInstCode sAssocInstCode,
+            aai.sInstNameHR sAssocInstNameHR
+          FROM
+            all_mags_for_event_info_wc amfeiw
+            JOIN preferred_mags_by_type pmbt ON (pmbt.idMag = amfeiw.idMag)
+            JOIN all_bind_info abi ON (amfeiw.idBind = abi.idBind)
+            JOIN all_author_info aai ON (abi.idAuthor = aai.idAuthor)
+          WHERE
+            amfeiw.huidEvent = :huid
+            AND amfeiw.sName = :author
+            AND amfeiw.sInstCode = :installation
+            AND amfeiw.sMagAbbrev = :magtype
+            AND amfeiw.idBind = pmbt.idBind`;
+
+      return connection.execute(sql, { huid: huid, author: author,
+        installation: installation, magtype: magtype })
+          .then(function (result) {
+            var json;
+
+            if (result.rows.length === 0) {
+              throw new Error('magnitude "' + [huid, author, installation,
+                magtype].join('/') + '" not found');}
+
+            json = _this._parseMagnitude(result.rows[0]);
+
+            return _this._getMagnitudeMomentTensor(connection,
+                result.rows[0].IDMAG, getPref).then(function (momentTensor) {
+                  json.properties['moment-tensors'] = [ momentTensor ];
+
+                  // no geometry if we didn't get a moment tensor
+                  if (momentTensor === null) {
+                    json.geometry = null;
+                  }
+                  // if we got an array of them, use the preferred-solution
+                  else if (Array.isArray(momentTensor)) {
+                    for (index = 0; index < momentTensor.length; index++) {
+                      if (momentTensor[index]['preferred-solution'] === true) {
+                        json.geometry = {
+                          type: 'Point',
+                          coordinates: [
+                            momentTensor[index]['derived-longitude'],
+                            momentTensor[index]['derived-latitude'],
+                            momentTensor[index]['derived-depth']
+                          ]
+                        };
+                      }
+                    }
+                  // if we only got one, use it
+                  } else {
+                    json.geometry = {
+                      type: 'Point',
+                      coordinates: [
+                        momentTensor['derived-longitude'],
+                        momentTensor['derived-latitude'],
+                        momentTensor['derived-depth']
+                      ]
+                    };
+                  }
+
+                  return json;
+                });
+          });
+    });
+  };
+
+  /**
+   * Fetch moment tensor for a specific magnitude.
+   *
+   * @param connection {Connection}
+   *     database connection.
+   * @param idmag {Integer}
+   *     magnitude id.
+   * @param getPref {Boolean}
+   *     flag indicating whether to only get the preferred moment tensor
+   * @return {Promise}
+   *     promise representing magnitude moment tensor information:
+   *     resolves with moment tensor object when successfully retrieved,
+   *     rejects with Error when unsuccessful.
+   */
+  _this._getMagnitudeMomentTensor = function (connection, idMag, getPref) {
+    var sql;
+
+    sql = `
+        SELECT
+          amws.idMw,
+          amws.dLat,
+          amws.dLon,
+          amws.dDepth,
+          amws.tOrigin,
+          amws.idOrigin,
+          amws.iNumStations,
+          amws.dPFPStrike,
+          amws.dPFPDip,
+          amws.dPFPRake,
+          amws.dAFPStrike,
+          amws.dAFPDip,
+          amws.dAFPRake,
+          amws.idMag,
+          amws.IterationIdMag,
+          amws.dM0,
+          amws.iScalarExp,
+          amws.dMisfit,
+          amws.dPercentDC,
+          amws.dPercentCLVD,
+          amws.dmXX,
+          amws.dmXY,
+          amws.dmXZ,
+          amws.dmYY,
+          amws.dmYZ,
+          amws.dmZZ,
+          amws.idMwFilter,
+          amws.dLowCutHz,
+          amws.dLowTaperHz,
+          amws.dHighCutHz,
+          amws.dHighTaperHz,
+          amws.idMwFilterS,
+          amws.dLowCutHzS,
+          amws.dLowTaperHzS,
+          amws.dHighCutHzS,
+          amws.dHighTaperHzS,
+          amws.dMisfitVR,
+          amws.iMagType,
+          amws.idBBDepth,
+          amws.iMethod,
+          amws.idSTF,
+          amws.dSTFRiseTimeSec,
+          amws.dSTFMaxAmpTimeSec,
+          amws.dSTFDecayTimeSec,
+          amws.idMwInput,
+          amws.MwIn_iMagType,
+          amws.MwIn_idAuthor,
+          amws.MwIn_sAuthorName,
+          amws.MwIn_sAuthorNameHR,
+          amws.MwIn_iAuthorType,
+          amws.MwIn_idInst,
+          amws.MwIn_sInstCode,
+          amws.iGap,
+          amws.dMinEigenValue,
+          amws.dMaxEigenValue
+        FROM
+          all_mw_solns_for_origin_xtrm amws
+        WHERE
+          amws.IterationIdMag = :idMag `;
+
+    // if we're only getting the preferred solution
+    if (getPref === true) {
+      sql += 'AND amws.idMag = :idMag';
+    }
+
+    return connection.execute(sql, {idMag: idMag})
+        .then(function (result) {
+          // not all magnitudes have a moment tensor
+          if (result.rows.length === 0) {
+            return null;}
+          else if (result.rows.length === 1) {
+            return _this._parseMagnitudeMomentTensor(result.rows[0]);}
+          else {
+            return result.rows.map(_this._parseMagnitudeMomentTensor);}
+        });
+  };
+
+  /**
    * Fetch magnitude summaries for a specific event.
    *
    * @param connection {Connection}
@@ -219,14 +437,13 @@ var HydraFactory = function (options) {
         });
   };
 
-
   /**
-   * Parse one magnitude summary row into an object.
+   * Parse one event summary row into an object.
    *
    * @param row {Object}
-   *     object from magnitude summary query result.
+   *     object from event summary query result.
    * @return {Object}
-   *     magnitude summary object.
+   *     event summary object.
    * @see _this.getEvent
    */
   _this._parseEvent = function (row) {
@@ -256,6 +473,57 @@ var HydraFactory = function (options) {
   };
 
   /**
+   * Parse one magnitude row into an object.
+   *
+   * @param row {Object}
+   *     object from magnitude query result.
+   * @return {Object}
+   *     magnitude object.
+   * @see _this.getMagnitude
+   */
+  _this._parseMagnitude = function (row) {
+    var mag,
+        internal;
+
+    // is author internal? check author type bit mask
+    // AuthorTypeFlags::Internal = 1024
+    if ((row.ITYPE & 1024) != 0) {
+      internal = true;
+    }
+    else {
+      internal = false;
+    }
+
+    // todo: need to get publishable from author +
+    //   business rules
+
+    mag = {
+      properties: {
+        'associated-by': row.SASSOCNAME,
+        'associated-by-installation': row.SASSOCINSTCODE,
+        'author': row.SNAME,
+        'derived-magnitude': row.DMAGAVG,
+        'derived-magnitude-type': row.SMAGABBREV,
+        'installation': row.SINSTCODE,
+        'is-internal': internal,
+        'is-preferred-for-type': Boolean(row.BPREFERREDBYTYPE),
+        'num-stations-associated': row.STAMAG_COUNT,
+        'num-stations-used': row.INUMMAGS
+      },
+      type: 'Feature'
+    };
+
+    mag.id = [
+      row.HUIDEVENT,
+      row.SNAME,
+      row.SINSTCODE,
+      row.SMAGABBREV
+    ].join('/');
+
+    return mag;
+  };
+
+  /**
    * Parse one magnitude summary row into an object.
    *
    * @param row {Object}
@@ -282,6 +550,102 @@ var HydraFactory = function (options) {
     ].join('/');
 
     return mag;
+  };
+
+  /**
+   * Parse one moment tensor row into an object.
+   *
+   * @param row {Object}
+   *     object from moment tensor query result.
+   * @return {Object}
+   *     moment tensor object.
+   * @see _this._getMagnitudeMomentTensor
+   */
+  _this._parseMagnitudeMomentTensor = function (row) {
+    var mt,
+        preferred,
+        scalarExponent,
+        moment,
+        mpp,
+        mrp,
+        mrr,
+        mrt,
+        mtp,
+        mtt,
+        stfType,
+        stfDuration;
+
+    if (row.IDMAG > 0){
+      preferred = true;
+    }
+    else {
+      preferred = false;
+    }
+
+    // convert scalar exponent from dyne-cm to newton-meters (10^-7)
+    scalarExponent = Math.pow(10, (row.ISCALAREXP - 7));
+
+    // moment data in hydra is stored seperatly from the scalar exponent
+    moment = row.DM0 * scalarExponent;
+
+    // apply XYZ to TPR conversion
+    mpp = row.DMYY * scalarExponent;
+    mrp = row.DMYZ * scalarExponent * -1;
+    mrr = row.DMZZ * scalarExponent;
+    mrt = row.DMXZ * scalarExponent;
+    mtp = row.DMXY * scalarExponent * -1;
+    mtt = row.DMXX * scalarExponent;
+
+    // convert sourcetime
+    stfDuration = row.DSTFRISETIMESEC + row.DSTFMAXAMPTIMESEC +
+      row.DSTFDECAYTIMESEC;
+
+    if((row.DSTFRISETIMESEC === 0) && (row.DSTFMAXAMPTIMESEC > 0) &&
+      (row.DSTFDECAYTIMESEC === 0)) {
+      stfType = 'box_car';
+    } else if((row.DSTFRISETIMESEC > 0) && (row.DSTFMAXAMPTIMESEC === 0) &&
+      (row.DSTFDECAYTIMESEC > 0)) {
+      stfType = 'triangle';
+    } else if((row.DSTFRISETIMESEC > 0) && (row.DSTFMAXAMPTIMESEC > 0) &&
+      (row.DSTFDECAYTIMESEC > 0)) {
+      stfType = 'trapezoid';
+    } else {
+      stfType = 'unknown';
+    }
+
+    mt = {
+      'azimuthal-gap': row.IGAP,
+      'condition': row.DMAXEIGENVALUE / row.DMINEIGENVALUE,
+      'derived-depth': row.DDEPTH,
+      'derived-eventtime': new Date(row.TORIGIN * 1000).toISOString(),
+      'derived-latitude': row.DLAT,
+      'derived-longitude': row.DLON,
+      'fit': row.DMISFIT,
+      'nodal-plane-1-dip': row.DPFPDIP,
+      'nodal-plane-1-slip': row.DPFPRAKE,
+      'nodal-plane-1-strike': row.DPFPSTRIKE,
+      'nodal-plane-2-dip': row.DAFPDIP,
+      'nodal-plane-2-slip': row.DAFPRAKE,
+      'nodal-plane-2-strike': row.DAFPSTRIKE,
+      'percent-double-couple': row.DPERCENTDC/100,
+      'num-stations-associated': row.STAMAG_COUNT,
+      'num-stations-used': row.INUMMAGS,
+      'scalar-moment': moment,
+      'sourcetime-decaytime': row.DSTFDECAYTIMESEC,
+      'sourcetime-duration': stfDuration,
+      'sourcetime-risetime': row.DSTFRISETIMESEC,
+      'sourcetime-type': stfType,
+      'tensor-mpp': mpp,
+      'tensor-mrp': mrp,
+      'tensor-mrr': mrr,
+      'tensor-mrt': mrt,
+      'tensor-mtp': mtp,
+      'tensor-mtt': mtt,
+      'variance-reduction' : row.DMISFITVR,
+      'preferred-solution' : preferred
+    };
+
+    return mt;
   };
 
 
