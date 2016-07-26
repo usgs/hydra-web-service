@@ -508,8 +508,7 @@ var HydraFactory = function (options) {
         'is-internal': internal,
         'is-preferred-for-type': Boolean(row.BPREFERREDBYTYPE),
         'num-stations-associated': row.STAMAG_COUNT,
-        'num-stations-used': row.INUMMAGS,
-        'idmag': row.IDMAG,
+        'num-stations-used': row.INUMMAGS
       },
       type: 'Feature'
     };
