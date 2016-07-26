@@ -51,6 +51,18 @@ var HydraFactory = function (options) {
 
 
   /**
+   * Free references.
+   */
+  _this.destroy = function () {
+    _dsn = null;
+    _password = null;
+    _username = null;
+
+    _initialize = null;
+    _this = null;
+  };
+
+  /**
    * Obtain database connection.
    *
    * @return {Promise}

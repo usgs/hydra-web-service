@@ -64,9 +64,12 @@ var HydraWebService = function (options) {
 
 
   _this.destroy = function () {
+    _this.factory.destroy();
+    _this.factory = null;
+    _this.handlers = null;
+
     _mountPath = null;
     _port = null;
-    _this.handlers = null;
     _this = null;
   };
 
