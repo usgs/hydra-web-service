@@ -2,6 +2,7 @@
 'use strict';
 
 var chai = require('chai'),
+    EventHandler = require('../../src/handler/EventHandler'),
     HydraWebService = require('../../src/HydraWebService'),
     sinon = require('sinon');
 
@@ -146,6 +147,17 @@ describe('HydraWebService', function () {
         done();
       });
       service.get(request);
+    });
+  });
+
+  describe('handlers', function () {
+    it('event.json uses EventHandler', function () {
+      var service;
+
+      service = HydraWebService();
+      expect(service.handlers['event.json']).to.equal(EventHandler);
+      service.destroy();
+      service = null;
     });
   });
 
