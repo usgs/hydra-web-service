@@ -31,24 +31,43 @@ var MagnitudeHandler = function (options) {
     _this.factory = options.factory;
   };
 
-
+  /**
+   * Free references.
+   */
   _this.destroy = function () {
     _initialize = null;
     _this = null;
   };
 
+  /**
+   * Get an event.
+   *
+   * @param params {Object}
+   *     request parameters.
+   * @param params.huid {String}
+   *     requested magnitude event id.
+   * @param params.author {String}
+   *     requested magnitude author.
+   * @param params.installation {String}
+   *     requested magnitude installation.
+   * @param params.magtype {String}
+   *     requested magnitude type.
+   * @return {Promise}
+   *     promise that resolves with the requested event,
+   *     or rejects with an error.
+   */
   _this.get = function (params) {
     if (!params.huid) {
-      throw new Error('huid is a required parameter');
+      return Promise.reject(new Error('huid is a required parameter'));
     }
     else if (!params.author) {
-      throw new Error('author is a required parameter');
+      return Promise.reject(new Error('author is a required parameter'));
     }
     else if (!params.installation) {
-      throw new Error('installation is a required parameter');
+      return Promise.reject(new Error('installation is a required parameter'));
     }
     else if (!params.magtype) {
-      throw new Error('magtype is a required parameter');
+      return Promise.reject(new Error('magtype is a required parameter'));
     }
     return _this.factory.getMagnitude(params.huid, params.author,
       params.installation, params.magtype);
