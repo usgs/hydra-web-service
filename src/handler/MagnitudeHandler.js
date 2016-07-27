@@ -57,20 +57,60 @@ var MagnitudeHandler = function (options) {
    *     or rejects with an error.
    */
   _this.get = function (params) {
+    var errorMessage,
+        errorString;
+
+    errorMessage = 'Missing required parameter(s):';
+    errorString = '';
+
+    // check params for missing parameters
+    // check huid
     if (!params.huid) {
-      return Promise.reject(new Error('huid is a required parameter'));
+      if (errorString !== '') {
+        errorString = errorString.concat(', ');
+      } else {
+        errorString = errorString.concat(' ');
+      }
+      errorString = errorString.concat('huid');
     }
-    else if (!params.author) {
-      return Promise.reject(new Error('author is a required parameter'));
+
+    // check author
+    if (!params.author) {
+      if (errorString !== '') {
+        errorString = errorString.concat(', ');
+      } else {
+        errorString = errorString.concat(' ');
+      }
+      errorString = errorString.concat('author');
     }
-    else if (!params.installation) {
-      return Promise.reject(new Error('installation is a required parameter'));
+
+    // check installation
+    if (!params.installation) {
+      if (errorString !== '') {
+        errorString = errorString.concat(', ');
+      } else {
+        errorString = errorString.concat(' ');
+      }
+      errorString = errorString.concat('installation');
     }
-    else if (!params.magtype) {
-      return Promise.reject(new Error('magtype is a required parameter'));
+
+    // check magtype
+    if (!params.magtype) {
+      if (errorString !== '') {
+        errorString = errorString.concat(', ');
+      } else {
+        errorString = errorString.concat(' ');
+      }
+      errorString = errorString.concat('magtype');
     }
-    return _this.factory.getMagnitude(params.huid, params.author,
-      params.installation, params.magtype);
+
+    // did we have missing parameter(s)
+    if (errorString === '') {
+      return _this.factory.getMagnitude(params.huid, params.author,
+        params.installation, params.magtype);
+    } else {
+      return Promise.reject(new Error(errorMessage.concat(errorString)));
+    }
   };
 
 
