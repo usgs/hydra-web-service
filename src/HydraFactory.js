@@ -156,7 +156,7 @@ var HydraFactory = function (options) {
             var json;
 
             if (result.rows.length === 0) {
-              throw new Error('Magnitude not found');
+              throw new Error('Event not found');
             }
 
             json = _this._parseEvent(result.rows[0]);
@@ -296,8 +296,7 @@ var HydraFactory = function (options) {
             var json;
 
             if (result.rows.length === 0) {
-              throw new Error('magnitude "' + [huid, author, installation,
-                magtype].join('/') + '" not found');
+              throw new Error('Magnitude not found');
             }
 
             json = _this._parseMagnitude(result.rows[0]);
