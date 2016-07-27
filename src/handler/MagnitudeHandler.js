@@ -40,7 +40,7 @@ var MagnitudeHandler = function (options) {
   };
 
   /**
-   * Get an event.
+   * Get a magnitude.
    *
    * @param params {Object}
    *     request parameters.
