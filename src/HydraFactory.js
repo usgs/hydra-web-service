@@ -237,12 +237,8 @@ var HydraFactory = function (options) {
    */
   _this.getMagnitude = function (huid, author, installation, magtype) {
     return _this.getConnection().then(function (connection) {
-      var getPref,
-          index,
+      var index,
           sql;
-
-      // get only preferred solution
-      getPref = true;
 
       sql = `
           SELECT
@@ -301,8 +297,8 @@ var HydraFactory = function (options) {
 
             json = _this._parseMagnitude(result.rows[0]);
 
-            return _this._getMagnitudeMomentTensor(connection,
-              result.rows[0].IDMAG, getPref).then(function (momentTensor) {
+            return _this._getMagnitudeMomentTensors(connection,
+              result.rows[0].IDMAG).then(function (momentTensor) {
                 json.properties['moment-tensors'] = momentTensor;
 
                 // no geometry if we didn't get a moment tensor
@@ -348,14 +344,12 @@ var HydraFactory = function (options) {
    *     database connection.
    * @param idmag {Integer}
    *     magnitude id.
-   * @param getPref {Boolean}
-   *     flag indicating whether to only get the preferred moment tensor
    * @return {Promise}
    *     promise representing magnitude moment tensor information:
    *     resolves with moment tensor object when successfully retrieved,
    *     rejects with Error when unsuccessful.
    */
-  _this._getMagnitudeMomentTensor = function (connection, idMag, getPref) {
+  _this._getMagnitudeMomentTensors = function (connection, idMag) {
     var sql;
 
     sql = `
@@ -418,12 +412,8 @@ var HydraFactory = function (options) {
         FROM
           all_mw_solns_for_origin_xtrm amws
         WHERE
-          amws.IterationIdMag = :idMag `;
-
-    // if we're only getting the preferred solution
-    if (getPref === true) {
-      sql += 'AND amws.idMag = :idMag';
-    }
+          amws.IterationIdMag = :idMag
+        ORDER BY amws.idMag ASC`;
 
     return connection.execute(sql, {idMag: idMag})
         .then(function (result) {
