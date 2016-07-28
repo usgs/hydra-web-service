@@ -57,60 +57,41 @@ var MagnitudeHandler = function (options) {
    *     or rejects with an error.
    */
   _this.get = function (params) {
-    var errorMessage,
-        errorString;
+    var missing;
 
-    errorMessage = 'Missing required parameter(s):';
-    errorString = '';
+    missing = [];
 
     // check params for missing parameters
     // check huid
     if (!params.huid) {
-      if (errorString !== '') {
-        errorString = errorString.concat(', ');
-      } else {
-        errorString = errorString.concat(' ');
-      }
-      errorString = errorString.concat('huid');
+      missing.push('huid');
     }
 
     // check author
     if (!params.author) {
-      if (errorString !== '') {
-        errorString = errorString.concat(', ');
-      } else {
-        errorString = errorString.concat(' ');
-      }
-      errorString = errorString.concat('author');
+      missing.push('author');
     }
 
     // check installation
     if (!params.installation) {
-      if (errorString !== '') {
-        errorString = errorString.concat(', ');
-      } else {
-        errorString = errorString.concat(' ');
-      }
-      errorString = errorString.concat('installation');
+      missing.push('installation');
     }
 
     // check magtype
     if (!params.magtype) {
-      if (errorString !== '') {
-        errorString = errorString.concat(', ');
-      } else {
-        errorString = errorString.concat(' ');
-      }
-      errorString = errorString.concat('magtype');
+      missing.push('magtype');
     }
 
     // did we have missing parameter(s)
-    if (errorString === '') {
-      return _this.factory.getMagnitude(params.huid, params.author,
-        params.installation, params.magtype);
-    } else {
-      return Promise.reject(new Error(errorMessage.concat(errorString)));
+    if (missing.length > 0) {
+      return Promise.reject(new Error(
+        'Missing required parameter' + (missing.length > 1 ? 's' : '') +
+        ': ' + missing.join(', ')));
     }
+
+    return _this.factory.getMagnitude(params.huid, params.author,
+      params.installation, params.magtype);
+
   };
 
 
