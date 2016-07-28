@@ -5,7 +5,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <script id="_fed_an_ua_tag" async="async" src="/lib/Universal-Federated-Analytics-Min.1.0.js?agency=DOI&amp;subagency=USGS&amp;pua=UA-7320779-1"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Merriweather:400,400italic,700|Source+Sans+Pro:400,300,700"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons%7CMerriweather:400,400italic,700%7CSource+Sans+Pro:400,300,700"/>
 </head>
 <body>
 
@@ -17,8 +17,8 @@
   <div class="page-content">
 
   <p>
-    The Magnitude endpoint allows users to request detailed magnitude
-    information for a specific from Hydra given a Hydra Universal ID (HUID),
+    The Magnitude endpoint allows users to request detailed information
+    about a specific magnitude from Hydra given a Hydra Universal ID (HUID),
     an Author Name, an Installation Code, and a Magnitude Type.
   </p>
 
@@ -52,7 +52,7 @@
     </li>
     <li id="author">
       <header>
-        <code>author_name</code>
+        <code>author</code>
         <small>String</small>
       </header>
       <section>
@@ -61,7 +61,7 @@
     </li>
     <li id="installation">
       <header>
-        <code>installation_code</code>
+        <code>installation</code>
         <small>String</small>
       </header>
       <section>
@@ -70,7 +70,7 @@
     </li>
     <li id="type">
       <header>
-        <code>type</code>
+        <code>magtype</code>
         <small>String</small>
       </header>
       <section>
@@ -91,409 +91,72 @@
         GeoJSON FeatureObject</a>.
     </p>
 
-  <h3>Properties</h3>
-    <p>
-      The returned Feature includes an id,
-      an optional geometry object with longitude, latitude, and elevation,
-      and a properties object with the following attributes:
-    </p>
 
-  <h4>Hydra/Magnitude</h4>
-  <ul class="parameters vertical separator no-style">
-    <li id="common-associated-by">
-      <header>
-        <code>associated-by</code>
-        <small>String</small>
-      </header>
-      <section>
-        A String containing the name of the author who associated this
-        magnitude with this event.
-      </section>
-    </li>
-    <li id="common-associated-by-installation">
-      <header>
-        <code>associated-by-installation</code>
-        <small>String</small>
-      </header>
-      <section>
-        A String containing the code for the installation of the author who
-        associated this magnitude with this event.
-      </section>
-    </li>
-    <li id="common-author">
-      <header>
-        <code>author</code>
-        <small>String</small>
-      </header>
-      <section>
-        A String containing the name of the author who created this
-        magnitude.
-      </section>
-    </li>
-    <li id="common-derived-magnitude">
-      <header>
-        <code>derived-magnitude</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the computed magnitude value.
-      </section>
-    </li>
-    <li id="common-derived-magnitude-type">
-      <header>
-        <code>derived-magnitude-type</code>
-        <small>String</small>
-      </header>
-      <section>
-        A String containing the type of this magnitude.
-      </section>
-    </li>
-    <li id="common-installation">
-      <header>
-        <code>installation</code>
-        <small>String</small>
-      </header>
-      <section>
-        A String containing the code for the installation of the author who
-        created this magnitude.
-      </section>
-    </li>
-    <li id="common-is-internal">
-      <header>
-        <code>is-internal</code>
-        <small>Boolean</small>
-      </header>
-      <section>
-        A Boolean flag indicating whether this magnitude was produced by an
-        internal author.
-      </section>
-    </li>
-    <li id="common-is-preferred-for-type">
-      <header>
-        <code>is-preferred-for-type</code>
-        <small>Boolean</small>
-      </header>
-      <section>
-        A Boolean flag indicating whether this magnitude is preferred for its
-        type.
-      </section>
-    </li>
-    <li id="common-is-internal">
-      <header>
-        <code>is-internal</code>
-        <small>Boolean</small>
-      </header>
-      <section>
-        A Boolean flag indicating whether this magnitude was produced by an
-        internal author.
-      </section>
-    </li>
-    <li id="common-num-stations-associated">
-      <header>
-        <code>num-stations-associated-internal</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A number containing the number of stations associated with this
-        magnitude
-      </section>
-    </li>
-    <li id="common-num-stations-used">
-      <header>
-        <code>num-stations-used</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A number indicating the number of stations that were used in generating
-        the derived magnitude.
-      </section>
-    </li>
-    <li id="common-moment-tensors">
-      <header>
-        <code>moment-tensors</code>
-        <small>Array</small>
-      </header>
-      <section>
-        An array of moment tensor solutions associated with this magnitude.
-      </section>
-    </li>
-    <li id="common-id">
-      <header>
-        <code>id</code>
-        <small>String</small>
-      </header>
-      <section>
-        A String containing the logical id for this magnitude.
-      </section>
-    </li>
-  </ul>
 
-  <h4>Hydra/Magnitude/MomentTensor</h4>
-  <ul class="parameters vertical separator no-style">
-    <li id="common-azimuthal-gap">
-      <header>
-        <code>azimuthal-gap</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A String containing azimuthal gap of this moment tensor solution.
-      </section>
-    </li>
-    <li id="common-condition">
-      <header>
-        <code>condition</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the condition number of this solution.
-      </section>
-    </li>
-    <li id="common-derived-depth">
-      <header>
-        <code>derived-depth</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating depth derived by the moment tensor algorithm.
-      </section>
-    </li>
-    <li id="common-derived-eventtime">
-      <header>
-        <code>derived-eventtime</code>
-        <small>Sring</small>
-      </header>
-      <section>
-        A String containing the ISO8601 formatted event time derived by the
-        moment tensor algorithm.
-      </section>
-    </li>
-    <li id="common-derived-latitude">
-      <header>
-        <code>derived-latitude</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the latitude derived by the moment tensor algorithm.
-      </section>
-    </li>
-    <li id="common-derived-longitude">
-      <header>
-        <code>derived-longitude</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the longitude derived by the moment tensor
-        algorithm.
-      </section>
-    </li>
-    <li id="common-fit">
-      <header>
-        <code>fit</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the moment tensor solution fit.
-      </section>
-    </li>
-    <li id="common-nodal-plane-1-dip">
-      <header>
-        <code>nodal-plane-1-dip</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the dip of the primary nodal plane for this moment
-        tensor solution.
-      </section>
-    </li>
-    <li id="common-nodal-plane-1-slip">
-      <header>
-        <code>nodal-plane-1-slip</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the slip of the primary nodal plane for this moment
-        tensor solution.
-      </section>
-    </li>
-    <li id="common-nodal-plane-1-strike">
-      <header>
-        <code>nodal-plane-1-strike</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the strike of the primary nodal plane for this moment
-        tensor solution.
-      </section>
-    </li>
-    <li id="common-nodal-plane-2-dip">
-      <header>
-        <code>nodal-plane-2-dip</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the dip of the alternate nodal plane for this moment
-        tensor solution.
-      </section>
-    </li>
-    <li id="common-nodal-plane-2-slip">
-      <header>
-        <code>nodal-plane-2-slip</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the slip of the alternate nodal plane for this
-        moment tensor solution.
-      </section>
-    </li>
-    <li id="common-nodal-plane-2-strike">
-      <header>
-        <code>nodal-plane-2-strike</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the strike of the alternate nodal plane for this
-        moment tensor solution.
-      </section>
-    </li>
-    <li id="common-percent-double-couple">
-      <header>
-        <code>percent-double-couple</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the moment tensor solution's percent double couple.
-      </section>
-    </li>
-    <li id="common-scalar-moment">
-      <header>
-        <code>scalar-moment</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the scalar moment of the moment tensor solution.
-      </section>
-    </li>
-    <li id="common-sourcetime-decaytime">
-      <header>
-        <code>sourcetime-decaytime</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the decay time of the source time function for this
-        moment tensor solution.
-      </section>
-    </li>
-    <li id="common-sourcetime-duration">
-      <header>
-        <code>sourcetime-duration</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the duration of the source time function for this
-        moment tensor solution.
-      </section>
-    </li>
-    <li id="common-sourcetime-risetime">
-      <header>
-        <code>sourcetime-risetime</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number indicating the rise time of the source time function for this
-        moment tensor solution.
-      </section>
-    </li>
-    <li id="common-sourcetime-type">
-      <header>
-        <code>sourcetime-type</code>
-        <small>String</small>
-      </header>
-      <section>
-        A String indicating the type of the source time function for this moment
-        tensor solution.
-      </section>
-    </li>
-    <li id="common-tensor-mpp">
-      <header>
-        <code>tensor-mpp</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the mpp tensor parameter in exponential notation for
-        this moment tensor solution.
-      </section>
-    </li>
-    <li id="common-tensor-mrp">
-      <header>
-        <code>tensor-mrp</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the mrp tensor parameter for this moment tensor
-        solution.
-      </section>
-    </li>
-    <li id="common-tensor-mrr">
-      <header>
-        <code>tensor-mrr</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the mrr tensor parameter for this moment tensor
-        solution.
-      </section>
-    </li>
-    <li id="common-tensor-mrt">
-      <header>
-        <code>tensor-mrt</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the mrt tensor parameter for this moment tensor
-        solution.
-      </section>
-    </li>
-    <li id="common-tensor-mtp">
-      <header>
-        <code>tensor-mtp</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the mtp tensor parameter for this moment tensor
-        solution.
-      </section>
-    </li>
-    <li id="common-tensor-mtt">
-      <header>
-        <code>tensor-mtt</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the mtt tensor parameter for this moment tensor
-        solution.
-      </section>
-    </li>
-    <li id="common-variance-reduction">
-      <header>
-        <code>variance-reduction</code>
-        <small>Number</small>
-      </header>
-      <section>
-        A Number containing the variance reduction for this moment tensor
-        solution.
-      </section>
-    </li>
-    <li id="common-preferred-solution">
-      <header>
-        <code>preferred-solution</code>
-        <small>Boolean</small>
-      </header>
-      <section>
-        A Boolean flag indicating whether this moment tensor solution is
-        the preferred solution.
-      </section>
-    </li>
-  </ul>
+  <h2>Output</h2>
+    <pre>
+      <code class="geojson">
+        {
+          properties: {
+            <a href='glossary.html#associated-by'>associated-by</a>: String,
+            <a href='glossary.html#associated-by-installation'>associated-by-installation</a>: String,
+            <a href='glossary.html#author'>author</a>: String,
+            <a href='glossary.html#derived-magnitude'>derived-magnitude</a>: Decimal,
+            <a href='glossary.html#derived-magnitude-type'>derived-magnitude-type</a>: String,
+            <a href='glossary.html#installation'>installation</a>: String,
+            <a href='glossary.html#is-internal'>is-internal</a>: Boolean,
+            <a href='glossary.html#is-preferred-for-type'>is-preferred-for-type</a>: Boolean,
+            <a href='glossary.html#num-stations-associated'>num-stations-associated</a>: Integer,
+            <a href='glossary.html#num-stations-used'>num-stations-used</a>: Integer,
+            moment-tensors: [
+              {
+                <a href='glossary.html#azimuthal-gap'>azimuthal-gap</a>: Integer,
+                <a href='glossary.html#condition'>condition</a>: Decimal,
+                derived-depth: Decimal,
+                derived-eventtime: String,
+                derived-latitude: Decimal,
+                derived-longitude: Decimal,
+                fit: Decimal,
+                method: String,
+                nodal-plane-1-dip: Decimal,
+                nodal-plane-1-slip: Decimal,
+                nodal-plane-1-strike: Decimal,
+                nodal-plane-2-dip: Decimal,
+                nodal-plane-2-slip: Decimal,
+                nodal-plane-2-strike: Decimal,
+                percent-double-couple: Decimal,
+                preferred-solution: Boolean,
+                scalar-moment: Integer,
+                sourcetime-decaytime: Integer,
+                sourcetime-duration: Integer,
+                sourcetime-risetime: Integer,
+                sourcetime-type: String,
+                tensor-mpp: Integer,
+                tensor-mrp: Integer,
+                tensor-mrr: Integer,
+                tensor-mrt: Integer,
+                tensor-mtp: Integer,
+                tensor-mtt: Integer,
+                variance-reduction: Decimal
+              },
+              ...
+            ]
+        },
+        type: "Feature",
+        id: String,
+        geometry: {
+          type: "Point",
+          coordinates: [
+            longitude,
+            latitude,
+            depth
+          ]
+        }
+      }
+      </code>
+    </pre>
+
+
 
   <h2 id="example">Examples</h2>
   <p>
@@ -510,11 +173,12 @@
           http://localhost:8000/ws/hydra/magnitude.json?huid=50003UWR&author=wphase_module&installation=NEIC&magtype=Mww      </a>
     </li>
     <li>
-      <p>mb mangitude without moment tensor:</p>
+      <p>mb magnitude without moment tensor:</p>
       <a href="http://localhost:8000/ws/hydra/magnitude.json?huid=50003UWR&author=mb_module&installation=NEIC&magtype=mb">
           http://localhost:8000/ws/hydra/magnitude.json?huid=50003UWR&author=mb_module&installation=NEIC&magtype=mb      </a>
     </li>
   </ul>
 </div>
+</main>
 </body>
 </html>
