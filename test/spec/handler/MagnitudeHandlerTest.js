@@ -40,7 +40,7 @@ describe('handler/MagnitudeHandler', function () {
             done(false);
           })
           .catch(function (err) {
-            expect(err.message).to.equal('Missing required parameter(s): huid, author, installation, magtype');
+            expect(err.message).to.equal('Missing required parameters: huid, author, installation, magtype');
             handler.destroy();
             done();
           });
