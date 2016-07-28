@@ -301,12 +301,8 @@ var HydraFactory = function (options) {
               result.rows[0].IDMAG).then(function (momentTensor) {
                 json.properties['moment-tensors'] = momentTensor;
 
-                // no geometry if we didn't get a moment tensor
-                if (momentTensor === null) {
-                  json.geometry = null;
-                }
                 // if we got an array of them, use the preferred-solution
-                else if (Array.isArray(momentTensor)) {
+                if (Array.isArray(momentTensor)) {
                   for (index = 0; index < momentTensor.length; index++) {
                     if (momentTensor[index]['preferred-solution'] === true) {
                       json.geometry = {
@@ -317,6 +313,7 @@ var HydraFactory = function (options) {
                           momentTensor[index]['derived-depth']
                         ]
                       };
+                      break;
                     }
                   }
                 // if we only got one, use it
@@ -419,7 +416,7 @@ var HydraFactory = function (options) {
         .then(function (result) {
           // not all magnitudes have a moment tensor
           if (result.rows.length === 0) {
-            return null;
+            return [];
           } else {
             return result.rows.map(_this._parseMagnitudeMomentTensor);
           }
@@ -517,6 +514,7 @@ var HydraFactory = function (options) {
     //   business rules
 
     mag = {
+      geometry: null,
       properties: {
         'associated-by': row.SASSOCNAME,
         'associated-by-installation': row.SASSOCINSTCODE,
@@ -592,7 +590,7 @@ var HydraFactory = function (options) {
     } else if (methodNumber === 2) {
       method = 'monte carlo';
     } else {
-      method = 'undefined';
+      method = null;
     }
 
     // convert scalar exponent from dyne-cm to newton-meters (10^-7)
