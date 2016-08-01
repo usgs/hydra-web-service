@@ -45,9 +45,10 @@ From root of project, run:
     docker run --entrypoint /bin/bash -it IMAGEID
     ```
 
-    At the container command prompt, run pre-install:
+    At the container command prompt, run pre-install then exit:
     ```
     src/lib/pre-install
+    exit
     ```
 
     save configuration:
@@ -55,7 +56,7 @@ From root of project, run:
     docker commit -c 'ENTRYPOINT src/lib/run' IMAGEID usgs/hydra-web-service:VERSION_configured
     ```
 
-    run container
+    run container as a daemon
     ```
     docker run -d -p 8000:8000 usgs/hydra-web-service:VERSION_configured
     ```
