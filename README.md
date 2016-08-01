@@ -17,56 +17,44 @@ Using the Generated Project
 
 ## Docker
 
-### Building a container
+### Building an image
 
-From root of project, run:
+- From root of project, run:
     ```
-    docker build -t usgs/hydra-web-service:VERSION .
-    ```
-
-### Running container
-
-- Run the container using the tag
-    ```
-    docker run -it -p 8000:8000 usgs/hydra-web-service:VERSION
+    docker build -t usgs/hydra-web-service:latest .
     ```
 
-- Configure container
+### Running a container
+
+- Start the container using the image tag
     ```
-    docker run -it -p 8000:8000 usgs/hydra-web-service:VERSION
+    docker run --name hydra-web-service -d -p 8000:8000 usgs/hydra-web-service:latest
     ```
 
-    stop container, and find IMAGEID using:
+- Configure started container
+
+    - Connect to running container on terminal
     ```
-    docker ps -a
+    docker exec -it hydra-web-service /bin/bash
     ```
 
-    Start the container interactively to run pre-install
-    ```
-    docker run --entrypoint /bin/bash -it IMAGEID
-    ```
-
-    At the container command prompt, run pre-install then exit:
+    - Run pre-install to configure application
     ```
     src/lib/pre-install
+    ```
+
+    - Exit the container
+    ```
     exit
     ```
 
-    save configuration, and reset the entrypoint to its default:
-    ```
-    docker commit -c 'ENTRYPOINT src/lib/run' IMAGEID usgs/hydra-web-service:VERSION_configured
-    ```
-
-    run container as a daemon
-    ```
-    docker run -d -p 8000:8000 usgs/hydra-web-service:VERSION_configured
-    ```
+- Restart the container to load the updated configuration
+  ```
+  docker stop hydra-web-service
+  docker start hydra-web-service
+  ```
 
 - Connect to running container in browser
-    ```
-    docker-machine env default \
-        | grep HOST \
-        | sed s/.*tcp/http/g \
-        | awk -F: '{print $1":"$2":8000/ws/hydra/"}' \
-        | xargs open
-    ```
+  ```
+  http://localhost:8000/ws/hydra/
+  ```
