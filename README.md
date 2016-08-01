@@ -31,7 +31,32 @@ From root of project, run:
 
 - Run the container using the tag
     ```
-    docker run -it -p 8000:8881 hydra-web-service:version
+    docker run -it -p 8000:8000 hydra-web-service:version
+    ```
+
+- Configure container
+    ```
+    docker run -it -p 8000:8000 usgs/hydra-web-service:0.1.0
+    ```
+
+    stop container, and find ID using:
+    ```
+    docker ps -a
+    ```
+
+    copy config.json:
+    ```
+    docker cp src/conf/config.json IMAGEID:/hazdev-project/src/conf/config.json
+    ```
+
+    save configuration:
+    ```
+    docker commit IMAGEID usgs/hydra-web-service:0.1.0_configured
+    ```
+
+    run container
+    ```
+    docker run -d -p 8000:8000 usgs/hydra-web-service:0.1.0_configured
     ```
 
 - Connect to running container in browser
