@@ -237,8 +237,7 @@ var HydraFactory = function (options) {
    */
   _this.getMagnitude = function (huid, author, installation, magtype) {
     return _this.getConnection().then(function (connection) {
-      var index,
-          sql;
+      var sql;
 
       sql = `
           SELECT
@@ -258,6 +257,7 @@ var HydraFactory = function (options) {
             amfeiw.sName,
             amfeiw.sNameHR,
             amfeiw.iType,
+            BITAND(amfeiw.iType, 1024) bIsInternal,
             amfeiw.idCommentAuthor,
             amfeiw.idInst,
             amfeiw.sInstCode,
@@ -301,33 +301,19 @@ var HydraFactory = function (options) {
               result.rows[0].IDMAG).then(function (momentTensor) {
                 json.properties['moment-tensors'] = momentTensor;
 
-                // if we got an array of them, use the preferred-solution
-                if (Array.isArray(momentTensor)) {
-                  for (index = 0; index < momentTensor.length; index++) {
-                    if (momentTensor[index]['preferred-solution'] === true) {
-                      json.geometry = {
-                        type: 'Point',
-                        coordinates: [
-                          momentTensor[index]['derived-longitude'],
-                          momentTensor[index]['derived-latitude'],
-                          momentTensor[index]['derived-depth']
-                        ]
-                      };
-                      break;
-                    }
+                if (momentTensor.length > 0)
+                {
+                  if (momentTensor[0]['preferred-solution'] === true) {
+                    json.geometry = {
+                      type: 'Point',
+                      coordinates: [
+                        momentTensor[0]['derived-longitude'],
+                        momentTensor[0]['derived-latitude'],
+                        momentTensor[0]['derived-depth']
+                      ]
+                    };
                   }
-                // if we only got one, use it
-                } else {
-                  json.geometry = {
-                    type: 'Point',
-                    coordinates: [
-                      momentTensor['derived-longitude'],
-                      momentTensor['derived-latitude'],
-                      momentTensor['derived-depth']
-                    ]
-                  };
                 }
-
                 return json;
               });
           });
@@ -391,6 +377,11 @@ var HydraFactory = function (options) {
           amws.iMagType,
           amws.idBBDepth,
           amws.iMethod,
+          CASE amws.iMethod
+            WHEN 1 THEN 'grid search'
+            WHEN 2 THEN 'monte carlo'
+            ELSE NULL
+          END szMethod,
           amws.idSTF,
           amws.dSTFRiseTimeSec,
           amws.dSTFMaxAmpTimeSec,
@@ -414,12 +405,7 @@ var HydraFactory = function (options) {
 
     return connection.execute(sql, {idMag: idMag})
         .then(function (result) {
-          // not all magnitudes have a moment tensor
-          if (result.rows.length === 0) {
-            return [];
-          } else {
-            return result.rows.map(_this._parseMagnitudeMomentTensor);
-          }
+          return result.rows.map(_this._parseMagnitudeMomentTensor);
         });
   };
 
@@ -498,17 +484,8 @@ var HydraFactory = function (options) {
    * @see _this.getMagnitude
    */
   _this._parseMagnitude = function (row) {
-    var internal,
+    var //internal,
         mag;
-
-    // Determine whether the type of the author is internal by comparing
-    // (bitwise and) the author type bitmask with the bitmask value for an
-    // internal author (1024).
-    if ((row.ITYPE & 1024) !== 0) {
-      internal = true;
-    } else {
-      internal = false;
-    }
 
     // todo: need to get publishable from author +
     //   business rules
@@ -522,7 +499,7 @@ var HydraFactory = function (options) {
         'derived-magnitude': row.DMAGAVG,
         'derived-magnitude-type': row.SMAGABBREV,
         'installation': row.SINSTCODE,
-        'is-internal': internal,
+        'is-internal': Boolean(row.BISINTERNAL),
         'is-preferred-for-type': Boolean(row.BPREFERREDBYTYPE),
         'num-stations-associated': row.STAMAG_COUNT,
         'num-stations-used': row.INUMMAGS
@@ -553,8 +530,6 @@ var HydraFactory = function (options) {
    */
   _this._parseMagnitudeMomentTensor = function (row) {
     var preferred,
-        method,
-        methodNumber,
         moment,
         mpp,
         mt,
@@ -570,7 +545,6 @@ var HydraFactory = function (options) {
         stfRiseTime,
         stfType;
 
-    methodNumber = row.IMETHOD;
     stfDecayTime = row.DSTFDECAYTIMESEC;
     stfMaxTime = row.DSTFMAXAMPTIMESEC;
     stfRiseTime = row.DSTFRISETIMESEC;
@@ -581,16 +555,6 @@ var HydraFactory = function (options) {
       preferred = true;
     } else {
       preferred = false;
-    }
-
-    // convert method, 0 = undefined, 1 = gridsearch, 2 = montecarlo
-    // method is only used by bbdepth
-    if (methodNumber === 1) {
-      method = 'grid search';
-    } else if (methodNumber === 2) {
-      method = 'monte carlo';
-    } else {
-      method = null;
     }
 
     // convert scalar exponent from dyne-cm to newton-meters (10^-7)
@@ -639,7 +603,7 @@ var HydraFactory = function (options) {
       'derived-latitude': row.DLAT,
       'derived-longitude': row.DLON,
       'fit': row.DMISFIT,
-      'method': method,
+      'method': row.SZMETHOD,
       'nodal-plane-1-dip': row.DPFPDIP,
       'nodal-plane-1-slip': row.DPFPRAKE,
       'nodal-plane-1-strike': row.DPFPSTRIKE,
