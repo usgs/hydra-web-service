@@ -10,7 +10,8 @@ Using the Generated Project
 
 ## Getting Started
 - run `npm install` to install application development dependencies
-- configure the application
+    - The application will prompt you for configuration information,
+      and create a file named `src/conf/config.json` in the project.
 - run `npm run dev` from the install directory
 
 
@@ -20,14 +21,14 @@ Using the Generated Project
 
 From root of project, run:
     ```
-    docker build -t usgs/hydra-web-service:version .
+    docker build -t usgs/hydra-web-service:VERSION .
     ```
 
 ### Running container
 
 - Run the container using the tag
     ```
-    docker run -it -p 8000:8000 hydra-web-service:version
+    docker run -it -p 8000:8000 usgs/hydra-web-service:VERSION
     ```
 
 - Configure container
@@ -35,7 +36,7 @@ From root of project, run:
     docker run -it -p 8000:8000 usgs/hydra-web-service:VERSION
     ```
 
-    stop container, and find ID using:
+    stop container, and find IMAGEID using:
     ```
     docker ps -a
     ```
@@ -51,7 +52,7 @@ From root of project, run:
     exit
     ```
 
-    save configuration:
+    save configuration, and reset the entrypoint to its default:
     ```
     docker commit -c 'ENTRYPOINT src/lib/run' IMAGEID usgs/hydra-web-service:VERSION_configured
     ```
