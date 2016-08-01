@@ -24,7 +24,7 @@ Using the Generated Project
 
 From root of project, run:
     ```
-    docker build -t hydra-web-service:version .
+    docker build -t usgs/hydra-web-service:version .
     ```
 
 ### Running container
@@ -39,6 +39,6 @@ From root of project, run:
     docker-machine env default \
         | grep HOST \
         | sed s/.*tcp/http/g \
-        | awk -F: '{print $1":"$2":8000"}' \
+        | awk -F: '{print $1":"$2":8000/ws/hydra/"}' \
         | xargs open
     ```

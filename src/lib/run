@@ -1,0 +1,16 @@
+#! /bin/bash
+
+# load login environment
+source /root/.bashrc
+
+# load node/npm environment
+source /root/.nvm/nvm.sh
+
+# load oracle environment variables
+source /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh
+# add oracle lib dir to LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=/u01/app/oracle/product/11.2.0/xe/lib
+
+
+# start application
+npm start

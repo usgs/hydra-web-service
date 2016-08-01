@@ -32,7 +32,7 @@ COPY . /hazdev-project
 RUN /bin/bash -c " \
     source /root/.nvm/nvm.sh; \
     export NON_INTERACTIVE=true; \
-    export ORACLE_HOME=/u01/app/oracle/product/11.2.0/xe; \
+    source /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh; \
     cd /hazdev-project \
     && npm install \
     && ./src/lib/pre-install \
@@ -44,7 +44,4 @@ RUN /bin/bash -c " \
 
 WORKDIR /hazdev-project
 EXPOSE 8881
-CMD /bin/bash -c " \
-    source /root/.nvm/nvm.sh; \
-    node start \
-    "
+ENTRYPOINT src/lib/run
