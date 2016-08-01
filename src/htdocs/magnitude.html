@@ -24,7 +24,8 @@
 
   <p>
     Data returned by the Hydra Web Service <em>Magnitude</em> endpoint
-    is provided by the Hydra Oracle database.
+    is provided by the Hydra Oracle database.  Only one magnitude will be
+    returned.
   </p>
 
   <h3>Syntax</h3>
@@ -91,72 +92,75 @@
         GeoJSON FeatureObject</a>.
     </p>
 
-
-
   <h2>Output</h2>
     <pre>
       <code class="geojson">
         {
-          properties: {
-            <a href='glossary.html#associated-by'>associated-by</a>: String,
-            <a href='glossary.html#associated-by-installation'>associated-by-installation</a>: String,
-            <a href='glossary.html#author'>author</a>: String,
-            <a href='glossary.html#derived-magnitude'>derived-magnitude</a>: Decimal,
-            <a href='glossary.html#derived-magnitude-type'>derived-magnitude-type</a>: String,
-            <a href='glossary.html#installation'>installation</a>: String,
-            <a href='glossary.html#is-internal'>is-internal</a>: Boolean,
-            <a href='glossary.html#is-preferred-for-type'>is-preferred-for-type</a>: Boolean,
-            <a href='glossary.html#num-stations-associated'>num-stations-associated</a>: Integer,
-            <a href='glossary.html#num-stations-used'>num-stations-used</a>: Integer,
-            moment-tensors: [
-              {
-                <a href='glossary.html#azimuthal-gap'>azimuthal-gap</a>: Integer,
-                <a href='glossary.html#condition'>condition</a>: Decimal,
-                derived-depth: Decimal,
-                derived-eventtime: String,
-                derived-latitude: Decimal,
-                derived-longitude: Decimal,
-                fit: Decimal,
-                method: String,
-                nodal-plane-1-dip: Decimal,
-                nodal-plane-1-slip: Decimal,
-                nodal-plane-1-strike: Decimal,
-                nodal-plane-2-dip: Decimal,
-                nodal-plane-2-slip: Decimal,
-                nodal-plane-2-strike: Decimal,
-                percent-double-couple: Decimal,
-                preferred-solution: Boolean,
-                scalar-moment: Integer,
-                sourcetime-decaytime: Integer,
-                sourcetime-duration: Integer,
-                sourcetime-risetime: Integer,
-                sourcetime-type: String,
-                tensor-mpp: Integer,
-                tensor-mrp: Integer,
-                tensor-mrr: Integer,
-                tensor-mrt: Integer,
-                tensor-mtp: Integer,
-                tensor-mtt: Integer,
-                variance-reduction: Decimal
-              },
-              ...
+          data: {
+            properties: {
+              <a href='glossary.html#associated-by'>associated-by</a>: String,
+              <a href='glossary.html#associated-by-installation'>associated-by-installation</a>: String,
+              <a href='glossary.html#author'>author</a>: String,
+              <a href='glossary.html#derived-magnitude'>derived-magnitude</a>: Decimal,
+              <a href='glossary.html#derived-magnitude-type'>derived-magnitude-type</a>: String,
+              <a href='glossary.html#installation'>installation</a>: String,
+              <a href='glossary.html#is-internal'>is-internal</a>: Boolean,
+              <a href='glossary.html#is-preferred-for-type'>is-preferred-for-type</a>: Boolean,
+              <a href='glossary.html#num-stations-associated'>num-stations-associated</a>: Integer,
+              <a href='glossary.html#num-stations-used'>num-stations-used</a>: Integer,
+              moment-tensors: [
+                {
+                  <a href='glossary.html#azimuthal-gap'>azimuthal-gap</a>: Integer,
+                  <a href='glossary.html#condition'>condition</a>: Decimal,
+                  <a href='glossary.html#depth'>derived-depth</a>: Decimal,
+                  <a href='glossary.html#time'>derived-eventtime</a>: String,
+                  <a href='glossary.html#latitude'>derived-latitude</a>: Decimal,
+                  <a href='glossary.html#longitude'>derived-longitude</a>: Decimal,
+                  <a href='glossary.html#fit'>fit</a>: Decimal,
+                  <a href='glossary.html#method'>method</a>: String,
+                  <a href='glossary.html#nodal-plane-1-dip:'>nodal-plane-1-dip</a>: Decimal,
+                  <a href='glossary.html#nodal-plane-1-slip'>nodal-plane-1-slip</a>: Decimal,
+                  <a href='glossary.html#nodal-plane-1-strike'>nodal-plane-1-strike</a>: Decimal,
+                  <a href='glossary.html#nodal-plane-2-dip:'>nodal-plane-2-dip</a>: Decimal,
+                  <a href='glossary.html#nodal-plane-2-slip'>nodal-plane-2-slip</a>: Decimal,
+                  <a href='glossary.html#nodal-plane-2-strike'>nodal-plane-2-strike</a>: Decimal,
+                  <a href='glossary.html#percent-double-couple'>percent-double-couple</a>: Decimal,
+                  <a href='glossary.html#preferred-solution'>preferred-solution</a>: Boolean,
+                  <a href='glossary.html#scalar-moment'>scalar-moment</a>: Integer,
+                  <a href='glossary.html#sourcetime-decaytime'>sourcetime-decaytime</a>: Integer,
+                  <a href='glossary.html#sourcetime-duration'>sourcetime-duration</a>: Integer,
+                  <a href='glossary.html#sourcetime-risetime'>sourcetime-risetime</a>: Integer,
+                  <a href='glossary.html#sourcetime-type'>sourcetime-type</a>: String,
+                  <a href='glossary.html#tensor-mpp'>tensor-mpp</a>: Integer,
+                  <a href='glossary.html#tensor-mrp'>tensor-mrp</a>: Integer,
+                  <a href='glossary.html#tensor-mrr'>tensor-mrr</a>: Integer,
+                  <a href='glossary.html#tensor-mrt'>tensor-mrt</a>: Integer,
+                  <a href='glossary.html#tensor-mtp'>tensor-mtp</a>: Integer,
+                  <a href='glossary.html#tensor-mtt'>tensor-mtt</a>: Integer,
+                  <a href='glossary.html#variance-reduction'>variance-reduction</a>: Decimal
+                },
+                ...
+              ]
+          },
+          type: "Feature",
+          <a href='glossary.html#id'>id</a>: String,
+          geometry: {
+            type: "Point",
+            coordinates: [
+              <a href='glossary.html#longitude'>longitude</a>,
+              <a href='glossary.html#latitude'>latitude</a>,
+              <a href='glossary.html#depth'>depth</a>
             ]
+          }
         },
-        type: "Feature",
-        id: String,
-        geometry: {
-          type: "Point",
-          coordinates: [
-            longitude,
-            latitude,
-            depth
-          ]
+        error: Boolean,
+        metadata: {
+          date: String,
+          url: String
         }
       }
       </code>
     </pre>
-
-
 
   <h2 id="example">Examples</h2>
   <p>
