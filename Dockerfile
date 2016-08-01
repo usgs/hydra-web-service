@@ -43,5 +43,5 @@ RUN /bin/bash -c " \
 
 
 WORKDIR /hazdev-project
-EXPOSE 8881
+EXPOSE 8000
 ENTRYPOINT src/lib/run
