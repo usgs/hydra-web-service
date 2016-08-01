@@ -10,35 +10,51 @@ Using the Generated Project
 
 ## Getting Started
 - run `npm install` to install application development dependencies
-- configure the application
+    - The application will prompt you for configuration information,
+      and create a file named `src/conf/config.json` in the project.
 - run `npm run dev` from the install directory
-
-## Configuration
-- run `src/lib/pre-install` to setup `src/conf/config.json`
-- `MOUNT_PATH` is the base url for the application
 
 
 ## Docker
 
-### Building a container
+### Building an image
 
-From root of project, run:
+- From root of project, run:
     ```
-    docker build -t hydra-web-service:version .
+    docker build -t usgs/hydra-web-service:latest .
     ```
 
-### Running container
+### Running a container
 
-- Run the container using the tag
+- Start the container using the image tag
     ```
-    docker run -it -p 8000:8881 hydra-web-service:version
+    docker run --name hydra-web-service -d -p 8000:8000 usgs/hydra-web-service:latest
     ```
+
+- Configure started container
+
+    - Connect to running container on terminal
+    ```
+    docker exec -it hydra-web-service /bin/bash
+    ```
+
+    - Run pre-install to configure application
+    ```
+    src/lib/pre-install
+    ```
+
+    - Exit the container
+    ```
+    exit
+    ```
+
+- Restart the container to load the updated configuration
+  ```
+  docker stop hydra-web-service
+  docker start hydra-web-service
+  ```
 
 - Connect to running container in browser
-    ```
-    docker-machine env default \
-        | grep HOST \
-        | sed s/.*tcp/http/g \
-        | awk -F: '{print $1":"$2":8000"}' \
-        | xargs open
-    ```
+  ```
+  http://localhost:8000/ws/hydra/
+  ```
