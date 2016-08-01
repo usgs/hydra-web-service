@@ -13,10 +13,6 @@ Using the Generated Project
 - configure the application
 - run `npm run dev` from the install directory
 
-## Configuration
-- run `src/lib/pre-install` to setup `src/conf/config.json`
-- `MOUNT_PATH` is the base url for the application
-
 
 ## Docker
 
@@ -36,7 +32,7 @@ From root of project, run:
 
 - Configure container
     ```
-    docker run -it -p 8000:8000 usgs/hydra-web-service:0.1.0
+    docker run -it -p 8000:8000 usgs/hydra-web-service:VERSION
     ```
 
     stop container, and find ID using:
@@ -44,19 +40,24 @@ From root of project, run:
     docker ps -a
     ```
 
-    copy config.json:
+    Start the container interactively to run pre-install
     ```
-    docker cp src/conf/config.json IMAGEID:/hazdev-project/src/conf/config.json
+    docker run --entrypoint /bin/bash -it IMAGEID
+    ```
+
+    At the container command prompt, run pre-install:
+    ```
+    src/lib/pre-install
     ```
 
     save configuration:
     ```
-    docker commit IMAGEID usgs/hydra-web-service:0.1.0_configured
+    docker commit -c 'ENTRYPOINT src/lib/run' IMAGEID usgs/hydra-web-service:VERSION_configured
     ```
 
     run container
     ```
-    docker run -d -p 8000:8000 usgs/hydra-web-service:0.1.0_configured
+    docker run -d -p 8000:8000 usgs/hydra-web-service:VERSION_configured
     ```
 
 - Connect to running container in browser
