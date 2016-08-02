@@ -490,8 +490,10 @@ var HydraFactory = function (options) {
 
     mag = {
       author: row.SNAME,
+      id: null,
       installation: row.SINSTCODE,
       type: row.SMAGABBREV,
+      url: null,
       value: row.DMAGAVG
     };
 
@@ -529,6 +531,7 @@ var HydraFactory = function (options) {
 
     mag = {
       geometry: null,
+      id: null,
       properties: {
         'associated-by': row.SASSOCNAME,
         'associated-by-installation': row.SASSOCINSTCODE,
