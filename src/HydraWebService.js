@@ -150,8 +150,13 @@ var HydraWebService = function (options) {
 
     response.status(500);
     response.json({
+      data: null,
       error: true,
-      message: (err && err.message) ? err.message : 'internal server error'
+      message: (err && err.message) ? err.message : 'internal server error',
+      metadata: {
+        date: new Date().toISOString(),
+        url: request.originalUrl
+      }
     });
   };
 
