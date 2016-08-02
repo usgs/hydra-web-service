@@ -40,7 +40,8 @@ describe('handler/MagnitudeHandler', function () {
             done(false);
           })
           .catch(function (err) {
-            expect(err.message).to.equal('Missing required parameters: huid, author, installation, magtype');
+            expect(err.message).to.equal('Missing required parameters:' +
+                ' author, huid, installation, type');
             handler.destroy();
             done();
           });
@@ -60,9 +61,12 @@ describe('handler/MagnitudeHandler', function () {
           factory: factory
         });
 
-        expect(handler.get({huid: 'test huid', author: 'test author',
+        expect(handler.get({
+          author: 'test author',
+          huid: 'test huid',
           installation: 'test installation',
-          magtype: 'test magtype'})).to.equal(ev);
+          type: 'test magtype'
+        })).to.equal(ev);
         expect(factory.getMagnitude.calledOnce).to.equal(true);
         expect(factory.getMagnitude.getCall(0).args[0]).to.equal('test huid');
       });

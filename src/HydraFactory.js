@@ -234,14 +234,14 @@ var HydraFactory = function (options) {
    *     unique identifier for magnitude author.
    * @param installation {String}
    *     unique identifier for mangitude author installation.
-   * @param magtype {String}
+   * @param type {String}
    *     unique identifier for magnitude type.
    * @return {Promise}
    *     promise representing magnitude information:
    *     resolves with Magnitude object when successfully retrieved,
    *     rejects with Error when unsuccessful.
    */
-  _this.getMagnitude = function (huid, author, installation, magtype) {
+  _this.getMagnitude = function (huid, author, installation, type) {
     return _this.getConnection().then(function (connection) {
       var params,
           sql;
@@ -295,14 +295,14 @@ var HydraFactory = function (options) {
             amfeiw.huidEvent = :huid
             AND amfeiw.sName = :author
             AND amfeiw.sInstCode = :installation
-            AND amfeiw.sMagAbbrev = :magtype
+            AND amfeiw.sMagAbbrev = :type
             AND amfeiw.idBind = pmbt.idBind`;
 
       params = {
         author: author,
         huid: huid,
         installation: installation,
-        magtype: magtype
+        type: type
       };
 
       return connection.execute(sql, params)
@@ -508,7 +508,7 @@ var HydraFactory = function (options) {
         '?author=' + mag.author +
         '&huid=' + huid +
         '&installation=' + mag.installation +
-        '&magtype=' + mag.type;
+        '&type=' + mag.type;
 
     return mag;
   };

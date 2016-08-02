@@ -51,7 +51,7 @@ var MagnitudeHandler = function (options) {
    *     requested magnitude author.
    * @param params.installation {String}
    *     requested magnitude installation.
-   * @param params.magtype {String}
+   * @param params.type {String}
    *     requested magnitude type.
    * @return {Promise}
    *     promise that resolves with the requested event,
@@ -63,14 +63,14 @@ var MagnitudeHandler = function (options) {
     missing = [];
 
     // check params for missing parameters
-    // check huid
-    if (!params.huid) {
-      missing.push('huid');
-    }
-
     // check author
     if (!params.author) {
       missing.push('author');
+    }
+
+    // check huid
+    if (!params.huid) {
+      missing.push('huid');
     }
 
     // check installation
@@ -78,9 +78,9 @@ var MagnitudeHandler = function (options) {
       missing.push('installation');
     }
 
-    // check magtype
-    if (!params.magtype) {
-      missing.push('magtype');
+    // check type
+    if (!params.type) {
+      missing.push('type');
     }
 
     // did we have missing parameter(s)
@@ -91,7 +91,7 @@ var MagnitudeHandler = function (options) {
     }
 
     return _this.factory.getMagnitude(params.huid, params.author,
-        params.installation, params.magtype);
+        params.installation, params.type);
   };
 
 
