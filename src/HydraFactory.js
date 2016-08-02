@@ -14,7 +14,7 @@ try {
 
 var _DEFAULTS = {
   dsn: 'connectString',
-  mountpath: 'mount',
+  mountPath: '/ws/hydra',
   password: 'password',
   username: 'user'
 };
@@ -243,7 +243,7 @@ var HydraFactory = function (options) {
    */
   _this.getMagnitude = function (huid, author, installation, magtype) {
     return _this.getConnection().then(function (connection) {
-      var row,
+      var params,
           sql;
 
       // build select statment, use huid, author, installation, and magtype to
@@ -298,10 +298,17 @@ var HydraFactory = function (options) {
             AND amfeiw.sMagAbbrev = :magtype
             AND amfeiw.idBind = pmbt.idBind`;
 
-      return connection.execute(sql, { huid: huid, author: author,
-        installation: installation, magtype: magtype })
+      params = {
+        author: author,
+        huid: huid,
+        installation: installation,
+        magtype: magtype
+      };
+
+      return connection.execute(sql, params)
           .then(function (result) {
-            var json;
+            var json,
+                row;
 
             if (result.rows.length === 0) {
               throw new Error('Magnitude not found');
@@ -310,24 +317,28 @@ var HydraFactory = function (options) {
             row = result.rows[0];
             json = _this._parseMagnitude(row);
 
-            return _this._getMagnitudeMomentTensors(connection,
-              row.IDMAG).then(function (momentTensor) {
-                json.properties['moment-tensors'] = momentTensor;
+            return _this._getMagnitudeMomentTensors(connection, row.IDMAG)
+                .then(function (momentTensors) {
+                  var momentTensor;
 
-                if (momentTensor.length > 0) {
-                  if (momentTensor[0]['preferred-solution'] === true) {
-                    json.geometry = {
-                      type: 'Point',
-                      coordinates: [
-                        momentTensor[0]['derived-longitude'],
-                        momentTensor[0]['derived-latitude'],
-                        momentTensor[0]['derived-depth']
-                      ]
-                    };
+                  json.properties['moment-tensors'] = momentTensors;
+
+                  if (momentTensors.length > 0) {
+                    momentTensor = momentTensors[0];
+                    if (momentTensor['preferred-solution'] === true) {
+                      json.geometry = {
+                        type: 'Point',
+                        coordinates: [
+                          momentTensor['derived-longitude'],
+                          momentTensor['derived-latitude'],
+                          momentTensor['derived-depth']
+                        ]
+                      };
+                    }
                   }
-                }
-                return json;
-              });
+
+                  return json;
+                });
           });
     });
   };
@@ -493,9 +504,11 @@ var HydraFactory = function (options) {
     ].join('/');
 
     // build url
-    mag.url = _mountPath + '/magnitude.json?huid=' + huid + '&author=' +
-      mag.author + '&installation=' + mag.installation + '&magtype=' +
-      mag.type;
+    mag.url = _mountPath + '/magnitude.json' +
+        '?author=' + mag.author +
+        '&huid=' + huid +
+        '&installation=' + mag.installation +
+        '&magtype=' + mag.type;
 
     return mag;
   };
@@ -510,11 +523,9 @@ var HydraFactory = function (options) {
    * @see _this.getMagnitude
    */
   _this._parseMagnitude = function (row) {
-    var //internal,
-        mag;
+    var mag;
 
-    // todo: need to get publishable from author +
-    //   business rules
+    // todo: need to get publishable from author + business rules
 
     mag = {
       geometry: null,

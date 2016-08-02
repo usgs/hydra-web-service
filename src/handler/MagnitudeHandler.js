@@ -31,6 +31,7 @@ var MagnitudeHandler = function (options) {
     _this.factory = options.factory;
   };
 
+
   /**
    * Free references.
    */
@@ -85,13 +86,12 @@ var MagnitudeHandler = function (options) {
     // did we have missing parameter(s)
     if (missing.length > 0) {
       return Promise.reject(new Error(
-        'Missing required parameter' + (missing.length > 1 ? 's' : '') +
-        ': ' + missing.join(', ')));
+          'Missing required parameter' + (missing.length > 1 ? 's' : '') +
+          ': ' + missing.join(', ')));
     }
 
     return _this.factory.getMagnitude(params.huid, params.author,
-      params.installation, params.magtype);
-
+        params.installation, params.magtype);
   };
 
 
