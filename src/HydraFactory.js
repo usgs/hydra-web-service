@@ -14,6 +14,7 @@ try {
 
 var _DEFAULTS = {
   dsn: 'connectString',
+  mountpath: 'mount',
   password: 'password',
   username: 'user'
 };
@@ -25,6 +26,9 @@ var _DEFAULTS = {
  * @param options {Object}
  * @param options.dsn {String}
  *     database connection string, usually of the form "HOST/DBNAME".
+ * @param options.mountPath {String}
+ *     default '/ws/hydra'.
+ *     site-root relative path to web service.
  * @param options.password {String}
  *     database connection password.
  * @param options.username {String}
@@ -35,6 +39,7 @@ var HydraFactory = function (options) {
       _initialize,
 
       _dsn,
+      _mountPath,
       _password,
       _username;
 
@@ -45,6 +50,7 @@ var HydraFactory = function (options) {
     options = extend({}, _DEFAULTS, options);
 
     _dsn = options.dsn;
+    _mountPath = options.mountPath;
     _password = options.password;
     _username = options.username;
   };
@@ -237,8 +243,14 @@ var HydraFactory = function (options) {
    */
   _this.getMagnitude = function (huid, author, installation, magtype) {
     return _this.getConnection().then(function (connection) {
-      var sql;
+      var row,
+          sql;
 
+      // build select statment, use huid, author, installation, and magtype to
+      // get a single magnitude (since only the latest magnitude per type/source
+      // is provided in all_mags_for_event_info_wc).  Use decode statement to
+      // get preferred by type, and use BITAND to convert author type to
+      // is internal.
       sql = `
           SELECT
             amfeiw.idMag,
@@ -295,14 +307,14 @@ var HydraFactory = function (options) {
               throw new Error('Magnitude not found');
             }
 
-            json = _this._parseMagnitude(result.rows[0]);
+            row = result.rows[0];
+            json = _this._parseMagnitude(row);
 
             return _this._getMagnitudeMomentTensors(connection,
-              result.rows[0].IDMAG).then(function (momentTensor) {
+              row.IDMAG).then(function (momentTensor) {
                 json.properties['moment-tensors'] = momentTensor;
 
-                if (momentTensor.length > 0)
-                {
+                if (momentTensor.length > 0) {
                   if (momentTensor[0]['preferred-solution'] === true) {
                     json.geometry = {
                       type: 'Point',
@@ -335,6 +347,11 @@ var HydraFactory = function (options) {
   _this._getMagnitudeMomentTensors = function (connection, idMag) {
     var sql;
 
+    // build select statment, use IterationIdMag to get all moment tensor
+    // solutions for this magnitude.  Order by idMag ascending to ensure
+    // that the preferred solution is first (since only the preferred
+    // solution will have a non-null idMag).  Use CASE statement to parse
+    // solution method.
     sql = `
         SELECT
           amws.idMw,
@@ -455,7 +472,10 @@ var HydraFactory = function (options) {
    * @see _this._getEventMagnitudes
    */
   _this._parseEventMagnitude = function (row) {
-    var mag;
+    var huid,
+        mag;
+
+    huid = row.HUIDEVENT;
 
     mag = {
       author: row.SNAME,
@@ -464,12 +484,18 @@ var HydraFactory = function (options) {
       value: row.DMAGAVG
     };
 
+    // build id
     mag.id = [
-      row.HUIDEVENT,
+      huid,
       mag.author,
       mag.installation,
       mag.type
     ].join('/');
+
+    // build url
+    mag.url = _mountPath + '/magnitude.json?huid=' + huid + '&author=' +
+      mag.author + '&installation=' + mag.installation + '&magtype=' +
+      mag.type;
 
     return mag;
   };
