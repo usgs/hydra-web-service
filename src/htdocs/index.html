@@ -4,29 +4,53 @@
   <title>Hydra Web Service Documentation</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <link rel="stylesheet" href="css/index.css"/>
-  <script id="_fed_an_ua_tag" async="async" src="/lib/Universal-Federated-Analytics-Min.1.0.js?agency=DOI&amp;subagency=USGS&amp;pua=UA-7320779-1"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+  <link rel="stylesheet" href="http://earthquake.usgs.gov/theme/site/earthquake/index.css"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Merriweather:400,400italic,700|Source+Sans+Pro:400,300,700"/>
+  <link rel="stylesheet" href="css/index.css"/>
 </head>
 <body>
-  <main role="main" class="page" aria-labelledby="page-header">
-      <header class="page-header" id="page-header">
-        <h1>Hydra Web Service</h1>
-      </header>
 
-      <div class="page-content">
+<main>
+  <header>
+    <h1>Hydra Web Service Documentation</h1>
+    <p>Web service to access information from Hydra database.</p>
+  </header>
 
-        <p>
-          The Hydra Web Service consists of 2 web service endpoints. Each end
-          point has a slightly different API and different available data. For
-          more details about each endpoint, please click a link below.
-        </p>
 
-        <ul class="endpoints">
-          <li><a href="./event.html">Event Service</a></li>
-          <li><a href="./magnitude.html">Magnitude Service</a></li>
-        </ul>
+  <h2>Endpoints</h2>
+  <p>
+    The Hydra Web Service consists of several web service endpoints. Each
+    endpoint has a slightly different API and different available data. For
+    more details about each endpoint, please click a link below.
+  </p>
 
-      </div>
+  <ul>
+    <li>
+      <a href="event.html">Event Endpoint Documentation</a>
+      <p>Summary information for one event.</p>
+    </li>
+    <li>
+      <a href="magnitude.html">Magnitude Endpoint Documentation</a>
+      <p>Detail information for one magnitude</p>
+    </li>
+  </ul>
+
+
+  <h2>Response Format</h2>
+  <p>
+    All web service endpoints use a similar response format.
+  </p>
+
+  <ul>
+    <li>
+      <a href="response.html">Response Format Documentation</a>
+    </li>
+  </ul>
+
+
+</main>
+
 </body>
 </html>
