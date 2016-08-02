@@ -1,17 +1,21 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
 <head>
-  <title>Magnitude Endpoint</title>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <script id="_fed_an_ua_tag" async="async" src="/lib/Universal-Federated-Analytics-Min.1.0.js?agency=DOI&amp;subagency=USGS&amp;pua=UA-7320779-1"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons%7CMerriweather:400,400italic,700%7CSource+Sans+Pro:400,300,700"/>
+   <title>Magnitude Endpoint Documentation</title>
+   <meta charset="utf-8"/>
+   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+   <link rel="stylesheet" href="http://earthquake.usgs.gov/theme/site/earthquake/index.css"/>
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Merriweather:400,400italic,700|Source+Sans+Pro:400,300,700"/>
+   <link rel="stylesheet" href="css/index.css"/>
 </head>
+
 <body>
 
   <main role="main" class="page" aria-labelledby="page-header">
   <header class="page-header" id="page-header">
-    <h1>Magnitude Endpoint</h1>
+    <h1>Magnitude Endpoint Documentation</h1>
   </header>
 
   <div class="page-content">
@@ -166,23 +170,30 @@
   <p>
     Below are example requests and responses that detail the GeoJSON
     structure.  Click the link for an example to see the response.  These
-    examples will only work on Hydra-Black, substitue appropriate HUIDs for
-    other Hydra Systems.
+    examples will only work for recent events on  Hydra-Black, substitute
+    appropriate HUIDs for other Hydra Systems.
   </p>
 
   <ul>
     <li>
       <p>W-Phase magnitude with moment tensor:</p>
-      <a href="http://localhost:8000/ws/hydra/magnitude.json?huid=50003UWR&author=wphase_module&installation=NEIC&magtype=Mww">
-          http://localhost:8000/ws/hydra/magnitude.json?huid=50003UWR&author=wphase_module&installation=NEIC&magtype=Mww      </a>
+      <a class="example-url" href="magnitude.json?huid=50003UWR&author=wphase_module&installation=NEIC&magtype=Mww">
+        magnitude.json?huid=50003UWR&author=wphase_module&installation=NEIC&magtype=Mww
+      </a>
     </li>
     <li>
       <p>mb magnitude without moment tensor:</p>
-      <a href="http://localhost:8000/ws/hydra/magnitude.json?huid=50003UWR&author=mb_module&installation=NEIC&magtype=mb">
-          http://localhost:8000/ws/hydra/magnitude.json?huid=50003UWR&author=mb_module&installation=NEIC&magtype=mb      </a>
+      <a class="example-url" href="magnitude.json?huid=50003UWR&author=mb_module&installation=NEIC&magtype=mb">
+        magnitude.json?huid=50003UWR&author=mb_module&installation=NEIC&magtype=mb
+      </a>
     </li>
   </ul>
 </div>
 </main>
+<footer class="site-commonnav">
+  <a href="index.html">Hydra Web Service Documentation</a>
+</footer>
+
+<script src="js/example-url.js"></script>
 </body>
 </html>
