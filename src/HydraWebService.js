@@ -100,6 +100,8 @@ var HydraWebService = function (options) {
       return;
     }
 
+    _this.setHeaders(response);
+
     try {
       handler = _this.handlers[method]({
         factory: _this.factory
@@ -170,6 +172,7 @@ var HydraWebService = function (options) {
       next();
       return;
     }
+
     response.json({
       data: data,
       error: false,
@@ -182,7 +185,29 @@ var HydraWebService = function (options) {
 
 
   /**
+   * Helper method to set CORS headers so AJAX calls can succeed.
+   *
+   * @param response {Response}
+   *     The response on which to set the headers.
+   */
+  _this.setHeaders = function (response) {
+    if (response) {
+      response.set({
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Method': '*',
+        'Access-Control-Allow-Headers': [
+          'accept',
+          'origin',
+          'authorization',
+          'content-type'
+        ].join(',')
+      });
+    }
+  };
+
+  /**
    * Run hydra web service in an express server.
+   *
    */
   _this.start = function () {
     var app;
