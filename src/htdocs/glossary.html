@@ -1,666 +1,704 @@
 <!doctype html>
 <html>
 <head>
-  <title>Hydra Web Service Documentation</title>
+  <title>Glossary - Hydra Web Service</title>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+  <link rel="stylesheet" href="http://earthquake.usgs.gov/theme/site/earthquake/index.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Merriweather:400,400italic,700|Source+Sans+Pro:400,300,700"/>
   <link rel="stylesheet" href="css/index.css"/>
-  <script id="_fed_an_ua_tag" async="async" src="/lib/Universal-Federated-Analytics-Min.1.0.js?agency=DOI&amp;subagency=USGS&amp;pua=UA-7320779-1"></script>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons%7CMerriweather:400,400italic,700%7CSource+Sans+Pro:400,300,700"/>
 </head>
 <body>
-  <main role="main" class="page" aria-labelledby="page-header">
-      <header class="page-header" id="page-header">
-        <h1>Glossary - Hydra Web Service</h1>
-      </header>
 
-      <div class="page-content">
+  <main>
+    <header>
+      <h1>Glossary - Hydra Web Service</h1>
+    </header>
 
-        <div class="row">
-          <section id="contents" class="column one-of-two">
-            <h2>Event Terms</h2>
-            <ul>
-              <li><a href='#depth'>depth</a></li>
-              <li><a href='#latitude'>latitude</a></li>
-              <li><a href='#longitude'>longitude</a></li>
-              <li><a href='#time'>time</a></li>
-            </ul>
-        </section>
-      </div>
 
-        <div class="row">
-          <section class="column one-of-two">
-            <h2>Magnitude Terms</h2>
-            <ul>
-              <li><a href='#associated-by'>associated-by</a></li>
-              <li><a href='#associated-by-installation'>associated-by-installation</a></li>
-              <li><a href='#author'>author</a></li>
-              <li><a href='#derived-magnitude'>derived-magnitude</a></li>
-              <li><a href='#derived-magnitude-type'>derived-magnitude-type</a></li>
-              <li><a href='#id'>id</a></li>
-              <li><a href='#installation'>installation</a></li>
-              <li><a href='#is-internal'>is-internal</a></li>
-              <li><a href='#is-preferred-for-type'>is-preferred-for-type</a></li>
-              <li><a href='#num-stations-associated'>num-stations-associated</a></li>
-              <li><a href='#num-stations-used'>num-stations-used</a></li>
-            </ul>
-        </section>
-      </div>
+    <section id="contents" class="column one-of-two">
+      <h2>Event Terms</h2>
+      <ul>
+        <li><a href="#depth">depth</a></li>
+        <li><a href="#latitude">latitude</a></li>
+        <li><a href="#longitude">longitude</a></li>
+        <li><a href="#time">time</a></li>
+      </ul>
 
-        <div class="row">
-          <section class="column one-of-two">
-            <h2>Moment Tensor Terms</h2>
-            <ul>
-              <li><a href='#azimuthal-gap'>azimuthal-gap</a></li>
-              <li><a href='#condition'>condition</a></li>
-              <li><a href='#fit'>fit</a></li>
-              <li><a href='#method'>method</a></li>
-              <li><a href='#nodal-plane-1-dip:'>nodal-plane-1-dip</a></li>
-              <li><a href='#nodal-plane-1-slip'>nodal-plane-1-slip</a></li>
-              <li><a href='#nodal-plane-1-strike'>nodal-plane-1-strike</a></li>
-              <li><a href='#nodal-plane-2-dip:'>nodal-plane-2-dip</a></li>
-              <li><a href='#nodal-plane-2-slip'>nodal-plane-2-slip</a></li>
-              <li><a href='#nodal-plane-2-strike'>nodal-plane-2-strike</a></li>
-              <li><a href='#percent-double-couple'>percent-double-couple</a></li>
-              <li><a href='#preferred-solution'>preferred-solution</a></li>
-              <li><a href='#scalar-moment'>scalar-moment</a></li>
-              <li><a href='#sourcetime-decaytime'>sourcetime-decaytime</a></li>
-              <li><a href='#sourcetime-duration'>sourcetime-duration</a></li>
-              <li><a href='#sourcetime-risetime'>sourcetime-risetime</a></li>
-              <li><a href='#sourcetime-type'>sourcetime-type</a></li>
-              <li><a href='#tensor-mpp'>tensor-mpp</a></li>
-              <li><a href='#tensor-mrp'>tensor-mrp</a></li>
-              <li><a href='#tensor-mrr'>tensor-mrr</a></li>
-              <li><a href='#tensor-mrt'>tensor-mrt</a></li>
-              <li><a href='#tensor-mtp'>tensor-mtp</a></li>
-              <li><a href='#tensor-mtt'>tensor-mtt</a></li>
-              <li><a href='#variance-reduction'>variance-reduction</a></li>
-            </ul>
-        </section>
-      </div>
+      <h2>Magnitude Terms</h2>
+      <ul>
+        <li><a href="#associated-by">associated-by</a></li>
+        <li><a href="#associated-by-installation">associated-by-installation</a></li>
+        <li><a href="#author">author</a></li>
+        <li><a href="#derived-magnitude">derived-magnitude</a></li>
+        <li><a href="#derived-magnitude-type">derived-magnitude-type</a></li>
+        <li><a href="#id">id</a></li>
+        <li><a href="#installation">installation</a></li>
+        <li><a href="#is-internal">is-internal</a></li>
+        <li><a href="#is-preferred-for-type">is-preferred-for-type</a></li>
+        <li><a href="#num-stations-associated">num-stations-associated</a></li>
+        <li><a href="#num-stations-used">num-stations-used</a></li>
+      </ul>
 
-      <div class="row">
-        <section class="column one-of-one">
-          <h2>Event Terms</h2>
-          <dl class="typelist vertical">
-            <dt id="depth">depth</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 1000]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  Depth in kilometers.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="latitude">latitude</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [-90.0, 90.0]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  Decimal degrees latitude. Negative values for southern
-                  latitudes.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="longitude">longitude</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [-180.0, 180.0]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  Decimal degrees longitude. Negative values for western
-                  longitudes.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="time">time</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [-180.0, 180.0]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  ISO8601 formatted event time.
-                </dd>
-              </dl>
-            </dd>
+      <h2>Moment Tensor Terms</h2>
+      <ul>
+        <li><a href="#azimuthal-gap">azimuthal-gap</a></li>
+        <li><a href="#condition">condition</a></li>
+        <li><a href="#fit">fit</a></li>
+        <li><a href="#method">method</a></li>
+        <li><a href="#nodal-plane-1-dip:">nodal-plane-1-dip</a></li>
+        <li><a href="#nodal-plane-1-slip">nodal-plane-1-slip</a></li>
+        <li><a href="#nodal-plane-1-strike">nodal-plane-1-strike</a></li>
+        <li><a href="#nodal-plane-2-dip:">nodal-plane-2-dip</a></li>
+        <li><a href="#nodal-plane-2-slip">nodal-plane-2-slip</a></li>
+        <li><a href="#nodal-plane-2-strike">nodal-plane-2-strike</a></li>
+        <li><a href="#percent-double-couple">percent-double-couple</a></li>
+        <li><a href="#preferred-solution">preferred-solution</a></li>
+        <li><a href="#scalar-moment">scalar-moment</a></li>
+        <li><a href="#sourcetime-decaytime">sourcetime-decaytime</a></li>
+        <li><a href="#sourcetime-duration">sourcetime-duration</a></li>
+        <li><a href="#sourcetime-risetime">sourcetime-risetime</a></li>
+        <li><a href="#sourcetime-type">sourcetime-type</a></li>
+        <li><a href="#tensor-mpp">tensor-mpp</a></li>
+        <li><a href="#tensor-mrp">tensor-mrp</a></li>
+        <li><a href="#tensor-mrr">tensor-mrr</a></li>
+        <li><a href="#tensor-mrt">tensor-mrt</a></li>
+        <li><a href="#tensor-mtp">tensor-mtp</a></li>
+        <li><a href="#tensor-mtt">tensor-mtt</a></li>
+        <li><a href="#variance-reduction">variance-reduction</a></li>
+      </ul>
+    </section>
 
-          </dl>
 
-          <h2>Magnitude Terms</h2>
-          <dl class="typelist vertical">
-            <dt id="associated-by">associated-by</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  "wphase_module", "mb_module"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The name of the author who associated this magnitude with
-                  this event.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="associated-by-installation">associated-by-installation</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  "NEIC", "HON"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The code for the installation of the author who associated
-                  this magnitude with this event.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="author">author</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  "wphase_module", "mb_module"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The name of the author who created this magnitude.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="derived-magnitude">derived-magnitude</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  5.547000000000001, 5.744000000000001
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The computed magnitude value.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="derived-magnitude-type">derived-magnitude-type</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                 "Mww", "mb"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The computed magnitude type.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="id">id</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  "50003UWR/wphase_module/NEIC/Mww", "50003UWR/mb_module/NEIC/mb"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The logical id for this magnitude.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="installation">installation</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  "NEIC", "HON"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The code for the installation of the author created this
-                  magnitude.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="is-internal">is-internal</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Boolean</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  true, false
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  A flag indicating whether this magnitude was produced by an
-                  internal author.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="is-preferred-for-type">is-preferred-for-type</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Boolean</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  true, false
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  A flag indicating whether this magnitude is preferred for
-                  its type.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="num-stations-associated">num-stations-associated</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 1000]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The number of stations associated with this magnitude.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="num-stations-used">num-stations-used</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 1000]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The number of stations that were used in generating the
-                  derived magnitude.
-                </dd>
-              </dl>
-            </dd>
-          </dl>
+    <h2>Event Terms</h2>
+    <dl class="typelist vertical">
+      <dt id="depth">depth</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 1000]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            Depth in kilometers.
+          </dd>
+        </dl>
+      </dd>
 
-          <h2>Moment Tensor Terms</h2>
-          <dl class="typelist vertical">
-            <dt id="azimuthal-gap">azimuthal-gap</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 360]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The azimuthal gap of this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="condition">condition</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 1000]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The azimuthal condition number of this solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="fit">fit</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 1]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The moment tensor solution fit.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="method">method</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  "grid search", "montey carlo"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The moment tensor solution method.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="nodal-plane-1-dip">nodal-plane-1-dip</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 360]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The dip of the primary nodal plane for this moment
-                  tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="nodal-plane-1-slip">nodal-plane-1-slip</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 360]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The slip of the primary nodal plane for this moment
-                  tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="nodal-plane-1-strike">nodal-plane-1-strike</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 360]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The strike of the primary nodal plane for this moment
-                  tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="nodal-plane-2-dip">nodal-plane-2-dip</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 360]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The dip of the alternate nodal plane for this moment
-                  tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="nodal-plane-2-slip">nodal-plane-2-slip</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 360]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The slip of the alternate nodal plane for this moment
-                  tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="nodal-plane-2-strike">nodal-plane-2-strike</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 360]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The strike of the alternate nodal plane for this moment
-                  tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="percent-double-couple">percent-double-couple</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 1]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The moment tensor solution's percent double couple.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="preferred-solution">preferred-solution</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Boolean</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [true, false]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  A flag indicating whether the moment tensor solution is the
-                  preferred solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="scalar-moment">scalar-moment</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  490000000000000060, 556000000000000060
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The scalar moment of the moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="sourcetime-decaytime">sourcetime-decaytime</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 100]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The decay time of the source time function for this
-                  moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="sourcetime-duration">sourcetime-duration</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 100]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The duration of the source time function for this
-                  moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="sourcetime-risetime">sourcetime-risetime</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 100]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The risetime time of the source time function for this
-                  moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="sourcetime-type">sourcetime-type</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">String</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  "box_car", "triangle", "trapezoid"
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The type of the source time function for this moment
-                  tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="tensor-mpp">tensor-mpp</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  -491900000000000060, -330550000000000060
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The mpp tensor parameter in for this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="tensor-mrp">tensor-mrp</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  -491900000000000060, -330550000000000060
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The mrp tensor parameter for this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="tensor-mrr">tensor-mrr</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  491900000000000060, 330550000000000060
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The mrr tensor parameter for this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="tensor-mrt">tensor-mrt</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  -491900000000000060, -330550000000000060
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The mrt tensor parameter for this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="tensor-mtp">tensor-mtp</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  -491900000000000060, -330550000000000060
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The mrp tensor parameter for this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="tensor-mtt">tensor-mtt</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Integer</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  491900000000000060, 330550000000000060
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The mtt tensor parameter for this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-            <dt id="variance-reduction">variance-reduction</dt>
-            <dd>
-              <dl>
-                <dt>Data Type</dt><dd class="datatype">Decimal</dd>
-                <dt>Typical Values</dt>
-                <dd>
-                  [0, 1]
-                </dd>
-                <dt>Description</dt>
-                <dd>
-                  The variance reduction for this moment tensor solution.
-                </dd>
-              </dl>
-            </dd>
-          </dl>
-        </section>
-      </div>
-    </div>
+      <dt id="latitude">latitude</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [-90.0, 90.0]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            Decimal degrees latitude. Negative values for southern
+            latitudes.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="longitude">longitude</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [-180.0, 180.0]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            Decimal degrees longitude. Negative values for western
+            longitudes.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="time">time</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [-180.0, 180.0]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            ISO8601 formatted event time.
+          </dd>
+        </dl>
+      </dd>
+
+    </dl>
+
+
+    <h2>Magnitude Terms</h2>
+    <dl class="typelist vertical">
+
+      <dt id="associated-by">associated-by</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            "wphase_module", "mb_module"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The name of the author who associated this magnitude with
+            this event.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="associated-by-installation">associated-by-installation</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            "NEIC", "HON"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The code for the installation of the author who associated
+            this magnitude with this event.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="author">author</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            "wphase_module", "mb_module"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The name of the author who created this magnitude.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="derived-magnitude">derived-magnitude</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            5.547000000000001, 5.744000000000001
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The computed magnitude value.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="derived-magnitude-type">derived-magnitude-type</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+           "Mww", "mb"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The computed magnitude type.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="id">id</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            "50003UWR/wphase_module/NEIC/Mww", "50003UWR/mb_module/NEIC/mb"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The logical id for this magnitude.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="installation">installation</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            "NEIC", "HON"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The code for the installation of the author created this
+            magnitude.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="is-internal">is-internal</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Boolean</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            true, false
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            A flag indicating whether this magnitude was produced by an
+            internal author.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="is-preferred-for-type">is-preferred-for-type</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Boolean</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            true, false
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            A flag indicating whether this magnitude is preferred for
+            its type.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="num-stations-associated">num-stations-associated</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 1000]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The number of stations associated with this magnitude.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="num-stations-used">num-stations-used</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 1000]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The number of stations that were used in generating the
+            derived magnitude.
+          </dd>
+        </dl>
+      </dd>
+
+    </dl>
+
+
+    <h2>Moment Tensor Terms</h2>
+    <dl class="typelist vertical">
+
+      <dt id="azimuthal-gap">azimuthal-gap</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 360]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The azimuthal gap of this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="condition">condition</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 1000]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The azimuthal condition number of this solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="fit">fit</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 1]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The moment tensor solution fit.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="method">method</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            "grid search", "montey carlo"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The moment tensor solution method.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="nodal-plane-1-dip">nodal-plane-1-dip</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 360]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The dip of the primary nodal plane for this moment
+            tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="nodal-plane-1-slip">nodal-plane-1-slip</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 360]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The slip of the primary nodal plane for this moment
+            tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="nodal-plane-1-strike">nodal-plane-1-strike</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 360]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The strike of the primary nodal plane for this moment
+            tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="nodal-plane-2-dip">nodal-plane-2-dip</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 360]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The dip of the alternate nodal plane for this moment
+            tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="nodal-plane-2-slip">nodal-plane-2-slip</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 360]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The slip of the alternate nodal plane for this moment
+            tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="nodal-plane-2-strike">nodal-plane-2-strike</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 360]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The strike of the alternate nodal plane for this moment
+            tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="percent-double-couple">percent-double-couple</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 1]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The moment tensor solution"s percent double couple.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="preferred-solution">preferred-solution</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Boolean</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [true, false]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            A flag indicating whether the moment tensor solution is the
+            preferred solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="scalar-moment">scalar-moment</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            490000000000000060, 556000000000000060
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The scalar moment of the moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="sourcetime-decaytime">sourcetime-decaytime</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 100]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The decay time of the source time function for this
+            moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="sourcetime-duration">sourcetime-duration</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 100]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The duration of the source time function for this
+            moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="sourcetime-risetime">sourcetime-risetime</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 100]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The risetime time of the source time function for this
+            moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="sourcetime-type">sourcetime-type</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">String</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            "box_car", "triangle", "trapezoid"
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The type of the source time function for this moment
+            tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="tensor-mpp">tensor-mpp</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            -491900000000000060, -330550000000000060
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The mpp tensor parameter in for this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="tensor-mrp">tensor-mrp</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            -491900000000000060, -330550000000000060
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The mrp tensor parameter for this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="tensor-mrr">tensor-mrr</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            491900000000000060, 330550000000000060
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The mrr tensor parameter for this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="tensor-mrt">tensor-mrt</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            -491900000000000060, -330550000000000060
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The mrt tensor parameter for this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="tensor-mtp">tensor-mtp</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            -491900000000000060, -330550000000000060
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The mrp tensor parameter for this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="tensor-mtt">tensor-mtt</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Integer</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            491900000000000060, 330550000000000060
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The mtt tensor parameter for this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+      <dt id="variance-reduction">variance-reduction</dt>
+      <dd>
+        <dl>
+          <dt>Data Type</dt><dd class="datatype">Decimal</dd>
+          <dt>Typical Values</dt>
+          <dd>
+            [0, 1]
+          </dd>
+          <dt>Description</dt>
+          <dd>
+            The variance reduction for this moment tensor solution.
+          </dd>
+        </dl>
+      </dd>
+
+    </dl>
+
+
   </main>
+
+  <footer class="site-commonnav">
+    <a href="index.html">Hydra Web Service Documentation</a>
+  </footer>
+
+  <script src="js/example-url.js"></script>
 </body>
 </html>
