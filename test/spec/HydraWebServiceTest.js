@@ -201,7 +201,9 @@ describe('HydraWebService', function () {
       };
       service = HydraWebService();
 
-      service.onError(null, null, response);
+      service.onError(null, {
+        originalUrl: 'original url'
+      }, response);
       expect(response.status.calledOnce).to.equal(true);
       expect(response.status.calledWith(500)).to.equal(true);
       expect(response.json.getCall(0).args[0].error).to.equal(true);
