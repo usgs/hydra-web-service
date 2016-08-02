@@ -40,7 +40,7 @@ var MagnitudeHandler = function (options) {
   };
 
   /**
-   * Get an event.
+   * Get a magnitude.
    *
    * @param params {Object}
    *     request parameters.
@@ -57,20 +57,41 @@ var MagnitudeHandler = function (options) {
    *     or rejects with an error.
    */
   _this.get = function (params) {
+    var missing;
+
+    missing = [];
+
+    // check params for missing parameters
+    // check huid
     if (!params.huid) {
-      return Promise.reject(new Error('huid is a required parameter'));
+      missing.push('huid');
     }
-    else if (!params.author) {
-      return Promise.reject(new Error('author is a required parameter'));
+
+    // check author
+    if (!params.author) {
+      missing.push('author');
     }
-    else if (!params.installation) {
-      return Promise.reject(new Error('installation is a required parameter'));
+
+    // check installation
+    if (!params.installation) {
+      missing.push('installation');
     }
-    else if (!params.magtype) {
-      return Promise.reject(new Error('magtype is a required parameter'));
+
+    // check magtype
+    if (!params.magtype) {
+      missing.push('magtype');
     }
+
+    // did we have missing parameter(s)
+    if (missing.length > 0) {
+      return Promise.reject(new Error(
+        'Missing required parameter' + (missing.length > 1 ? 's' : '') +
+        ': ' + missing.join(', ')));
+    }
+
     return _this.factory.getMagnitude(params.huid, params.author,
       params.installation, params.magtype);
+
   };
 
 
