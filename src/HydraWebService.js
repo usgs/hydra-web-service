@@ -54,6 +54,7 @@ var HydraWebService = function (options) {
 
     _this.factory = HydraFactory({
       dsn: options.DB_DSN,
+      mountPath: _mountPath,//options.MOUNT_PATH,
       password: options.DB_PASS,
       username: options.DB_USER
     });
