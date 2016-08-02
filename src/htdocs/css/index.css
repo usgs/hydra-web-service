@@ -1,4 +1,8 @@
-#application:after {
-  content: 'css content';
-  display: block;
+main {
+  padding: 0 16px;
+  width: 100%;
+}
+
+.site-commonnav {
+  margin-top: 2em;
 }

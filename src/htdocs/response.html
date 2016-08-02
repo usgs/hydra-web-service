@@ -1,0 +1,102 @@
+<!doctype html>
+<html>
+<head>
+  <title>Response Format Documentation</title>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+
+  <link rel="stylesheet" href="http://earthquake.usgs.gov/theme/site/earthquake/index.css"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons|Merriweather:400,400italic,700|Source+Sans+Pro:400,300,700"/>
+  <link rel="stylesheet" href="css/index.css"/>
+</head>
+<body>
+
+<main>
+  <header>
+    <h1>Response Format Documentation</h1>
+    <p>All web service endpoints use a similar response format</p>
+  </header>
+
+
+  <h2 id="properties">Properties</h3>
+  <dl>
+    <dt id="data">data</dt>
+    <dd>
+      Either a
+      <a href="http://geojson.org/geojson-spec.html#feature-objects">
+        GeoJSON Feature</a>,
+      or <code>null</code> if an error occured.
+    </dd>
+
+    <dt id="error">error</dt>
+    <dd>
+      Whether an Error occurred.
+      <code>true</code> indicates an error,
+      <code>false</code> indicates success.
+
+      <p>
+        NOTE: When <code>error</code> is <code>true</code>, an additional
+        property <a href="#message"><code>message</code></a>
+        is included.
+      </p>
+    </dd>
+
+    <dt id="message">message</dt>
+    <dd>
+      Error message, if an error occurred.
+
+      <p>
+        NOTE: Only set when <a href="#error"><code>error</code></a>
+        is <code>true</code>.
+      </p>
+    </dd>
+
+
+    <dt id="metadata">metadata</dt>
+    <dd>
+      Object with information about the request.
+
+      <dl>
+        <dt id="metadata_date">date</dt>
+        <dd>Request time as ISO8601 formatted string</dd>
+
+        <dt id="metadata_url">url</dt>
+        <dd>The requested URL including any query string parameters</dd>
+      </dl>
+    </dd>
+  </dl>
+
+
+  <h2 id="example_success">Example Successful Reponse</h3>
+  <div class="code"><pre>{
+  "data": {GeoJSON Feature},
+  "error": false,
+  "metadata": {
+    "date": "2016-08-02T18:03:26.122Z",
+    "url": "/ws/hydra/event.json?huid=50003UWR"
+  }
+}</pre></div>
+
+
+  <h2 id="example_error">Example Error Response</h3>
+  <div class="code"><pre>{
+  "data": null,
+  "error": true,
+  "message": "Event not found",
+  "metadata": {
+    "date": "2016-08-02T18:03:26.122Z",
+    "url": "/ws/hydra/event.json?huid=50003UW"
+  }
+}</pre></div>
+
+
+  </main>
+
+  <footer class="site-commonnav">
+    <a href="index.html">Hydra Web Service Documentation</a>
+  </footer>
+
+  <script src="js/example-url.js"></script>
+</body>
+</html>
