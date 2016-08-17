@@ -1,6 +1,7 @@
 'use strict';
 
-var fs = require('fs'),
+var extend = require('extend'),
+    fs = require('fs'),
     HydraWebService = require('./HydraWebService');
 
 
@@ -18,7 +19,9 @@ if (!fs.existsSync(configPath)) {
 }
 
 config = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+
+// allow environment variables to override configuration, mostly for docker
+config = extend(config, process.env);
+
 service = HydraWebService(config);
-
-
 service.start();
