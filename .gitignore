@@ -3,3 +3,4 @@ node_modules
 *.sublime-workspace
 src/conf/config.json
 coverage
+instantclient*

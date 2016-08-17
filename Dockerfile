@@ -1,8 +1,8 @@
 ## Docker file to build app as container
 
-FROM wnameless/oracle-xe-11g
+FROM debian:jessie
 MAINTAINER "Jeremy Fee" <jmfee@usgs.gov>
-LABEL dockerfile_version="v0.1.1"
+LABEL dockerfile_version="v0.1.2"
 
 
 # install dependencies
@@ -14,9 +14,27 @@ RUN apt-key update -y && \
         curl \
         g++ \
         git \
+        libaio1 \
         make \
-        python && \
+        python \
+        unzip && \
     apt-get clean
+
+
+# install oracle instantclient
+COPY instantclient-* /opt/oracle/
+
+RUN /bin/bash -c " \
+    cd /opt/oracle && \
+    unzip instantclient-basic* && \
+    unzip instantclient-sdk* && \
+    rm instantclient-* && \
+    ln -s instantclient_* instantclient && \
+    cd instantclient && \
+    ln libclntsh.so* libclntsh.so && \
+    echo 'export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/opt/oracle/instantclient' \
+        >> /etc/profile.d/oracle.sh \
+    "
 
 
 # install nvm
@@ -26,10 +44,6 @@ RUN export NVM_DIR="/nvm" && \
        | /bin/bash && \
     echo 'export NVM_DIR=/nvm' >> /etc/profile.d/nvm.sh && \
     echo '. ${NVM_DIR}/nvm.sh' >> /etc/profile.d/nvm.sh && \
-    echo '. /u01/app/oracle/product/11.2.0/xe/bin/oracle_env.sh' \
-        >> /etc/profile.d/oracle.sh && \
-    echo 'export LD_LIBRARY_PATH=${ORACLE_HOME}/lib' \
-        >> /etc/profile.d/oracle.sh && \
     /bin/bash --login -c "nvm install 4.2.4"
 
 
