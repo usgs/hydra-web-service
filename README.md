@@ -28,31 +28,32 @@ Using the Generated Project
 
 - Start the container using the image tag
     ```
-    docker run --name hydra-web-service -d -p 8000:8000 usgs/hydra-web-service:latest
+    docker run \
+        --name hydra-web-service \
+        -d \
+        -p 8000:8000 \
+        -e DB_DSN=host/sid \
+        -e DB_USER=username \
+        -e DB_PASS=password \
+        usgs/hydra-web-service:latest
     ```
 
-- Configure started container
+    - `--name hydra-web-service`
+      specify a container name `hydra-web-service`.
+    - `-d`
+      run as a daemon (in the background).
+    - `-p 8000:8000` \
+      forward docker host port 8000 (left side of colon)
+      to container port 8000 (right side of colon)
+    - `-e DB_DSN=host/sid` \
+      specify hydra database hostname and system id
+    - `-e DB_USER=username` \
+      specify hydra database user name
+    - `-e DB_PASS=password` \
+      specify hydra database password
+    - `usgs/hydra-web-service:latest`
+      use the `usgs/hydra-web-service:latest` image from docker hub.
 
-    - Connect to running container on terminal
-    ```
-    docker exec -it hydra-web-service /bin/bash
-    ```
-
-    - Run pre-install to configure application
-    ```
-    src/lib/pre-install
-    ```
-
-    - Exit the container
-    ```
-    exit
-    ```
-
-- Restart the container to load the updated configuration
-  ```
-  docker stop hydra-web-service
-  docker start hydra-web-service
-  ```
 
 - Connect to running container in browser
   ```
