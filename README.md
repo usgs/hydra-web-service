@@ -19,6 +19,11 @@ Using the Generated Project
 
 ### Building an image
 
+- Download the `instantclient-basic` and `instantclient-sdk` zip files for `Linux x86-64` from Oracle and place into the root of the project:
+    ```
+    http://www.oracle.com/technetwork/database/features/instant-client/index.html
+    ```
+
 - From root of project, run:
     ```
     docker build -t usgs/hydra-web-service:latest .
